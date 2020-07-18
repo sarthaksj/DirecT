@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="900.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.DirecT.Controller.AppIntro">
+   <center>
+      <StackPane fx:id="pane1" styleClass="slide1" BorderPane.alignment="CENTER">
+         <children>
+            <Label text="Share Anywhere Across Your Devices" textFill="WHITE">
+               <StackPane.margin>
+                  <Insets bottom="350.0" />
+               </StackPane.margin>
+            </Label>
+            <Label text="Welcome" textFill="WHITE">
+               <StackPane.margin>
+                  <Insets bottom="600.0" />
+               </StackPane.margin>
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <VBox fx:id="pane2" styleClass="slide2">
+               <children>
+                  <StackPane prefHeight="50.0" styleClass="center">
+                     <VBox.margin>
+                        <Insets left="150.0" right="150.0" top="250.0" />
+                     </VBox.margin>
+                     <children>
+                        <TextField fx:id="username" alignment="CENTER" promptText="Enter You Name ">
+                           <StackPane.margin>
+                              <Insets left="100.0" right="100.0" />
+                           </StackPane.margin>
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </TextField>
+                     </children>
+                  </StackPane>
+               </children></VBox>
+         </children>
+      </StackPane>
+   </center>
+   <bottom>
+      <StackPane prefHeight="50.0" styleClass="topbottompane" BorderPane.alignment="CENTER">
+         <children>
+            <JFXButton fx:id="nxt" buttonType="RAISED" onAction="#nextAction" prefWidth="100.0" text="Next">
+               <StackPane.margin>
+                  <Insets left="200.0" />
+               </StackPane.margin>
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </JFXButton>
+            <JFXButton fx:id="prev" buttonType="RAISED" onAction="#backAction" prefWidth="100.0" text="Previous">
+               <StackPane.margin>
+                  <Insets right="200.0" />
+               </StackPane.margin>
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </JFXButton>
+            <Label fx:id="countLabel" text="1/2" textFill="WHITE">
+               <font>
+                  <Font size="20.0" />
+               </font>
+               <StackPane.margin>
+                  <Insets />
+               </StackPane.margin></Label>
+         </children>
+      </StackPane>
+   </bottom>
+</BorderPane>

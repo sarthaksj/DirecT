@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+
+<AnchorPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="900.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.DirecT.Controller.SplashScreen">
+   <children>
+      <BorderPane layoutX="286.0" layoutY="167.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <center>
+            <ImageView fx:id="imgView" fitHeight="200.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
+         </center>
+      </BorderPane>
+   </children>
+</AnchorPane>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXListView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="900.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.DirecT.Controller.ReceiverProgress">
+   <center>
+      <VBox fx:id="vBox" alignment="CENTER" styleClass="center" BorderPane.alignment="CENTER" />
+   </center>
+   <bottom>
+      <HBox alignment="CENTER" prefHeight="50.0" styleClass="topbottompane" BorderPane.alignment="CENTER_RIGHT">
+         <children>
+            <JFXButton fx:id="send" buttonType="RAISED" onAction="#sendFiles" prefHeight="40.0" prefWidth="190.0" text="Send Files">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </JFXButton>
+            <JFXButton fx:id="disconnect" buttonType="RAISED" onAction="#disconnect" prefHeight="40.0" prefWidth="190.0" text="Disconnect">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="20.0" />
+               </HBox.margin>
+            </JFXButton>
+         </children>
+      </HBox>
+   </bottom>
+   <left>
+      <VBox fx:id="vboxCont" prefWidth="300.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label text="Name Of Files Received">
+               <VBox.margin>
+                  <Insets left="10.0" />
+               </VBox.margin>
+               <font>
+                  <Font name="System Bold Italic" size="25.0" />
+               </font>
+            </Label>
+            <JFXListView fx:id="filelList" prefHeight="1000.0" prefWidth="300.0" />
+         </children>
+      </VBox>
+   </left>
+   <top>
+      <StackPane alignment="TOP_RIGHT" prefHeight="45.0" styleClass="topbottompane" BorderPane.alignment="CENTER">
+         <children>
+            <Label fx:id="username" textFill="WHITE">
+               <StackPane.margin>
+                  <Insets right="5.0" top="5.0" />
+               </StackPane.margin>
+            </Label>
+            <Pane>
+               <children>
+                  <Text fill="WHITE" layoutX="10.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Receiver's Progress">
+                     <font>
+                        <Font name="System Bold" size="26.0" />
+                     </font>
+                  </Text>
+               </children>
+            </Pane>
+         </children>
+      </StackPane>
+   </top>
+</BorderPane>

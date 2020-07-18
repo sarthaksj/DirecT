@@ -1,0 +1,86 @@
+.mobile-button {
+	-fx-background-image: url('Icons/mobileicon.png');
+	-fx-background-size: 80.0 80.0;
+	-fx-background-repeat: no-repeat;
+	-fx-background-position: center 110.0;
+	-fx-background-color: transparent;
+}
+
+.computer-button {
+	-fx-background-image: url('Icons/laptopicon.png');
+	-fx-background-size: 80.0 80.0;
+	-fx-background-repeat: no-repeat;
+	-fx-background-position: center 110.0;
+	-fx-background-color: transparent;
+}
+
+.send-button {
+	-fx-background-image: url('Icons/sendicon.png');
+	-fx-background-size: 80.0 80.0;
+	-fx-background-repeat: no-repeat;
+	-fx-background-position: center 110.0;
+	-fx-background-color: transparent;
+}
+
+.receive-button {
+	-fx-background-image: url('Icons/receiveicon.png');
+	-fx-background-size: 80.0 80.0;
+	-fx-background-repeat: no-repeat;
+	-fx-background-position: center 110.0;
+	-fx-background-color: transparent;
+}
+
+.backbutton{
+	-fx-background-image: url('Icons/back.png');
+	-fx-background-size: 30.0 30.0;
+	-fx-background-repeat: no-repeat;
+	-fx-background-position: center;
+}
+.drawer{               
+	-fx-background-image: url('Icons/drawericon.png');
+	-fx-background-size: 30.0 30.0;
+	-fx-background-repeat: no-repeat;
+	-fx-background-position: center;
+}
+
+
+.slide1{
+	-fx-background-color: #2874A6;
+}
+.slide2{
+	-fx-background-color: #16A085;
+}
+.topbottompane{
+    -fx-background-color: #192A56;
+}
+.center{
+	-fx-background-color: #FFFFFF;
+}
+.button{
+	 -fx-background-color: #FFFFFF;
+}
+.button:hover{
+	 -fx-background-color: #FBC531;
+     -fx-text-fill: #000000;   
+}
+.sidePanel{
+	 -fx-background-color: #FFFFFF;   
+}
+.wifi-panel{
+	-fx-background-color:#FFFFFF;
+}
+
+.wifi-button{
+	-fx-alignment:TOP_LEFT;
+	-fx-align-items: left; 
+	-fx-pref-width:330.0;
+	-fx-pref-height:50.0;
+	-fx-background-color:#192A56;
+	-fx-text-fill: #FFFFFF;
+}
+.wifi-button:hover{
+    -fx-background-color: #FBC531;
+    -fx-text-fill: #000000;
+}
+
+
