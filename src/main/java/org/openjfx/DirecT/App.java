@@ -1,7 +1,6 @@
 package org.openjfx.DirecT;
 
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -14,8 +13,6 @@ public class App extends Application {
 
 	private static Scene scene;
 	
-	
-
 	@Override
 	public void stop() {
 		try {
@@ -29,7 +26,7 @@ public class App extends Application {
 		QrCode.deleteQr();
 	
 	}
-
+    
 	@Override
 	public void start(Stage stage) throws IOException {
 		scene = new Scene(loadFXML("SplashScreen"));

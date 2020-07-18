@@ -2,10 +2,17 @@ package org.openjfx.DirecT.FlowControl;
 
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.openjfx.DirecT.Database.DbConnection;
 
 public class DetailsJsonHandler {
+	Connection con;
+	Statement st;
 
 	public static void increaseCount() {
 
@@ -38,8 +45,8 @@ public class DetailsJsonHandler {
 	}
 
 	public static boolean ifFirstTime() {
-		//return true if app opens first time
-		
+		// return true if app opens first time
+
 		JSONParser jsonParser = new JSONParser();
 		boolean firstTime = true;
 		try {
@@ -54,7 +61,7 @@ public class DetailsJsonHandler {
 			if (count != 0) {
 				firstTime = false;
 			}
-			
+
 			fileReader.close();
 		} catch (Exception e) {
 			System.out.println("Exception inside checkCount while accessing details.json file");
@@ -63,9 +70,9 @@ public class DetailsJsonHandler {
 		}
 
 		return firstTime;
-		
+
 	}
-	
+
 	public static String getName() {
 
 		JSONParser jsonParser = new JSONParser();
@@ -85,23 +92,19 @@ public class DetailsJsonHandler {
 			e.printStackTrace();
 		}
 
-		
-	
 		return name;
 
 	}
 
 	public static void setName(String name) {
 
-		
-		//capitalize first alphabet of the name
-		char ch=name.charAt(0);
-		if((int)ch>96) {
-			ch=(char)((int)ch-32);
+		// capitalize first alphabet of the name
+		char ch = name.charAt(0);
+		if ((int) ch > 96) {
+			ch = (char) ((int) ch - 32);
 		}
-		
-		
-		name=ch+name.substring(1);
+
+		name = ch + name.substring(1);
 		JSONParser jsonParser = new JSONParser();
 		boolean firstTime = true;
 		try {
@@ -127,8 +130,33 @@ public class DetailsJsonHandler {
 
 	}
 
-	public static void main(String[] args) {
-		setName("Aviral");
+	public static void userCount() throws SQLException {
+		Connection con;
+		Statement st;
+		String query = "update users set activeUserCount = activeUserCount+1";
+		con = DbConnection.databaseConnectivity();
+		st = con.createStatement();
+		int rs = st.executeUpdate(query);
+	}
+
+	public static int versionCheck() throws SQLException {
+		Connection con;
+		Statement st;
+		int version = 0;
+		String query = "select version from users";
+		con = DbConnection.databaseConnectivity();
+		st = con.createStatement();
+		ResultSet rs = st.executeQuery(query);
+		while (rs.next()) {
+			version = rs.getInt(1);
+			System.out.println("Version " + version);
+		}
+		return version;
+	}
+
+	public static void main(String[] args) throws SQLException {
+		// userCount();
+		versionCheck();
 	}
 
 }
