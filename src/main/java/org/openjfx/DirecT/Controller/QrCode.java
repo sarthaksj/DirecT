@@ -8,6 +8,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Hashtable;
 import java.util.ResourceBundle;
 import javax.imageio.ImageIO;
@@ -23,6 +25,8 @@ import com.google.zxing.qrcode.QRCodeWriter;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 
 import animatefx.animation.FadeIn;
+import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -44,7 +48,7 @@ public class QrCode implements Initializable {
 		new FadeIn(mainPane).play();
 
 		String qrCodeText = "//Enter Text Here 7060621259 7906831276";
-		String filePath = "Code.png";
+		String filePath = "src/main/resources/org/openjfx/Code.png";
 		int size = 150;
 		String fileType = "png";
 		File qrFile = new File(filePath);
@@ -54,7 +58,7 @@ public class QrCode implements Initializable {
 			e.printStackTrace();
 		}
 		try {
-			FileInputStream input = new FileInputStream("Code.png");
+			FileInputStream input = new FileInputStream(filePath);
 			Image image = new Image(input);
 			qrcodeImg.setImage(image);
 		} catch (FileNotFoundException e) {
@@ -89,6 +93,18 @@ public class QrCode implements Initializable {
 			}
 		}
 		ImageIO.write(image, fileType, qrFile);
+	}
+
+	public static void deleteQr() {
+		Platform.exit();
+		try {
+			File f;
+			f = new File("src/main/resources/org/openjfx/Code.png");
+			f.delete();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	@FXML

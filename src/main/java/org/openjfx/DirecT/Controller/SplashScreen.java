@@ -35,7 +35,7 @@ public class SplashScreen implements Initializable {
 		boolean check = DetailsJsonHandler.ifFirstTime();// to check if the app is opened first time and to increase count every time
 
 		try {
-			FileInputStream input = new FileInputStream("directLogo.png");
+			FileInputStream input = new FileInputStream("src/main/resources/org/openjfx/Icons/directLogo.jpg");
 			imgView.setImage(new Image(input));
 		} catch (FileNotFoundException e1) {
 			e1.printStackTrace();
