@@ -25,8 +25,15 @@ public class App extends Application {
 			e.printStackTrace();
 		}
 		
-		WindowsCommands.deleteWifiProfile();
+		System.out.println("Hello");
+		//WindowsCommands.deleteWifiProfile();
 		QrCode.deleteQr();
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	
 	}
 
