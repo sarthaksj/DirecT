@@ -13,6 +13,22 @@ import org.openjfx.DirecT.Controller.QrCode;
 public class App extends Application {
 
 	private static Scene scene;
+	
+	
+
+	@Override
+	public void stop() {
+		try {
+			super.stop();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		WindowsCommands.deleteWifiProfile();
+		QrCode.deleteQr();
+	
+	}
 
 	@Override
 	public void start(Stage stage) throws IOException {
@@ -20,9 +36,7 @@ public class App extends Application {
 		stage.setTitle("DirecT");
 		stage.setScene(scene);
 		stage.show();
-		stage.setOnCloseRequest(e -> Platform.exit());
-		stage.setOnCloseRequest(e -> QrCode.deleteQr());
-		stage.setOnCloseRequest(e -> WindowsCommands.deleteWifiProfile());
+
 	}
 
 	public static void setRoot(String fxml) throws IOException {
