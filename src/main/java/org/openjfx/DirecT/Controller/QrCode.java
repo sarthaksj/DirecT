@@ -55,7 +55,8 @@ public class QrCode implements Initializable {
 			FileInputStream input = new FileInputStream(filePath);
 			Image image = new Image(input);
 			qrcodeImg.setImage(image);
-		} catch (FileNotFoundException e) {
+			input.close();
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
@@ -90,12 +91,12 @@ public class QrCode implements Initializable {
 	}
 
 	public static void deleteQr() {
-		Platform.exit();
+		//Platform.exit();
 		try {
 			File f;
 			f = new File("src/main/resources/org/openjfx/Code.png");
 			f.delete();
-
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
