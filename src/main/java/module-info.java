@@ -6,11 +6,11 @@ module org.openjfx.DirecT {
 	requires javafx.graphics;
 	requires com.jfoenix;
 	requires json.simple;
-	requires AnimateFX;
 	requires java.desktop;
 	requires com.google.zxing;
 	requires java.base;
 	requires java.sql;
+	requires AnimateFX;
 
 	opens org.openjfx.DirecT to javafx.fxml;
 	exports org.openjfx.DirecT;
