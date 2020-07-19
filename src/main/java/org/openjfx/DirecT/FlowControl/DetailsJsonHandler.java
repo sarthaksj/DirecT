@@ -156,7 +156,7 @@ public class DetailsJsonHandler {
 
 	public static void main(String[] args) throws SQLException {
 		// userCount();
-		versionCheck();
+		//versionCheck();
 	}
 
 }
