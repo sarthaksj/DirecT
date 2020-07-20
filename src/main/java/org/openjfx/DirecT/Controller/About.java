@@ -16,6 +16,7 @@ public class About implements Initializable {
 	@FXML
 	public TextFlow about;
 
+
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 		new FadeIn(about).play();

@@ -18,10 +18,13 @@
          <children>
             <StackPane alignment="TOP_RIGHT" prefHeight="45.0" styleClass="topbottompane" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <Label fx:id="username" textFill="WHITE">
+                  <Label fx:id="username" text="Sarthak" textFill="WHITE">
                      <StackPane.margin>
-                        <Insets right="5.0" top="5.0" />
+                        <Insets right="15.0" top="10.0" />
                      </StackPane.margin>
+                     <font>
+                        <Font size="13.0" />
+                     </font>
                   </Label>
                   <Pane>
                      <children>

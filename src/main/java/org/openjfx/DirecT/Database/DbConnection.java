@@ -4,19 +4,18 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 
 public class DbConnection {
+	static String jdbcUrl = "jdbc:mysql://localhost:3306/test";
+	static String user = "root";
+	static String pass = "sarthak1234";
+	static Connection myConn = null;
 
-	public static Connection databaseConnectivity(){
-
-		String jdbcUrl = "jdbc:mysql://localhost:3306/test";
-		String user = "root";
-		String pass = "sarthak1234";
-        String driverName="com.mysql.cj.jdbc.Driver";
-        Connection myConn = null;
+	public static Connection databaseConnectivity() {
+		String driverName = "com.mysql.cj.jdbc.Driver";
 		try {
 			Class.forName(driverName);
 			System.out.println("Connecting To Database: " + jdbcUrl);
 
-			 myConn = DriverManager.getConnection(jdbcUrl, user, pass);
+			myConn = DriverManager.getConnection(jdbcUrl, user, pass);
 
 			System.out.println("Connection Successful!: " + myConn);
 
@@ -25,6 +24,4 @@ public class DbConnection {
 		}
 		return myConn;
 	}
-	
-
 }

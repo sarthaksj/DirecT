@@ -137,6 +137,9 @@ public class DetailsJsonHandler {
 		con = DbConnection.databaseConnectivity();
 		st = con.createStatement();
 		int rs = st.executeUpdate(query);
+		
+		con.close();
+		st.close();
 	}
 
 	public static int versionCheck() throws SQLException {
@@ -151,12 +154,16 @@ public class DetailsJsonHandler {
 			version = rs.getInt(1);
 			System.out.println("Version " + version);
 		}
+		con.close();
+		st.close();
+		rs.close();
 		return version;
+		
 	}
 
 	public static void main(String[] args) throws SQLException {
-		// userCount();
-		//versionCheck();
+		 //userCount();
+		versionCheck();
 	}
 
 }

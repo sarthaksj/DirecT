@@ -44,8 +44,11 @@
          <children>
             <Label fx:id="username" textFill="WHITE">
                <StackPane.margin>
-                  <Insets right="5.0" top="5.0" />
+                  <Insets right="15.0" top="10.0" />
                </StackPane.margin>
+               <font>
+                  <Font size="13.0" />
+               </font>
             </Label>
             <Pane>
                <children>

@@ -25,12 +25,6 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.openjfx</groupId>
-			<artifactId>javafx-media</artifactId>
-			<version>13.0.2</version>
-		</dependency>
-
-		<dependency>
 			<groupId>com.jfoenix</groupId>
 			<artifactId>jfoenix</artifactId>
 			<version>9.0.8</version>
@@ -52,13 +46,6 @@
 			<groupId>io.github.typhon0</groupId>
 			<artifactId>AnimateFX</artifactId>
 			<version>1.2.1</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.openjfx</groupId>
-			<artifactId>javafx-graphics</artifactId>
-			<version>13.0.2</version>
-			<type>jar</type>
 		</dependency>
 
 		<dependency>
@@ -86,10 +73,6 @@
 					<mainClass>org.openjfx.DirecT.App</mainClass>
 				</configuration>
 			</plugin>
-
-
-
-
 
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

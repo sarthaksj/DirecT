@@ -6,13 +6,14 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import java.io.IOException;
-import org.openjfx.DirecT.Commands.WindowsCommands;
+import java.sql.SQLException;
 import org.openjfx.DirecT.Controller.QrCode;
 
+   
 public class App extends Application {
 
 	private static Scene scene;
-	
+
 	@Override
 	public void stop() {
 		try {
@@ -21,9 +22,9 @@ public class App extends Application {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		System.out.println("Hello");
-		//WindowsCommands.deleteWifiProfile();
+		// WindowsCommands.deleteWifiProfile();
 		QrCode.deleteQr();
 		try {
 			Thread.sleep(2000);
@@ -31,15 +32,22 @@ public class App extends Application {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	
+
 	}
-    
+
 	@Override
-	public void start(Stage stage) throws IOException {
+	public void start(Stage stage) throws SQLException, IOException {
 		scene = new Scene(loadFXML("SplashScreen"));
 		stage.setTitle("DirecT");
 		stage.setScene(scene);
 		stage.show();
+		/*stage.setOnCloseRequest(e -> {
+			try {
+				Update.fetchUpdate();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		});*/
 
 	}
 
@@ -52,11 +60,9 @@ public class App extends Application {
 		return fxmlLoader.load();
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws SQLException {
 
 		launch();
 	}
-	
-
 
 }
