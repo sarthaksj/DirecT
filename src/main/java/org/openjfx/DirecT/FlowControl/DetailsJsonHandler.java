@@ -274,15 +274,12 @@ public class DetailsJsonHandler {
 	}
 
 	public static void main(String[] args) throws SQLException {
-<<<<<<< HEAD
 		// userCount();
 		//versionCheck();
 		//System.out.println(shouldCheckForUpdate());
 		
-=======
 		 //userCount();
 		versionCheck();
->>>>>>> db615d97ab4f3ea68278842cffd3528765cb25ac
 	}
 
 }

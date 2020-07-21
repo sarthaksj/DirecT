@@ -13,6 +13,7 @@ import javafx.animation.FadeTransition;
 import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
@@ -89,7 +90,34 @@ public class UsersSelection implements Initializable {
 	private void sender() throws IOException {
 
 		FlowControlVariables.sender = true;
-		App.setRoot("DeviceSelection");
+		
+		//check if sender is connected to a wifi
+		boolean isConnected=true;
+		try {
+			isConnected = WindowsCommands.connectedToWifi();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if(!isConnected) {
+			
+			Alert alert = new Alert(Alert.AlertType.INFORMATION);
+			alert.setTitle("No Connection Available");
+			alert.setHeaderText("");
+			alert.setContentText("Please make sure you are connected to a wifi network");
+			alert.showAndWait();
+			return;
+			
+		}
+		
+		//has to open a hotspot here now 
+		try {
+			WindowsCommands.openHotspot();
+		} catch (Exception e) {
+
+		}
+		
+		App.setRoot("FileSelection");
 	}
 
 	@FXML
@@ -104,7 +132,7 @@ public class UsersSelection implements Initializable {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		App.setRoot("DeviceSelection");
+		App.setRoot("WifiDevices");
 	}
 
 	@FXML
