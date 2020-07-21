@@ -104,7 +104,6 @@ class SendThread implements Runnable {
 
 			String key = entry.getKey();// key contains parent
 
-
 			for (String value : FileSelection.fileListWithParent.get(key)) {
 
 				// value contains the absoulte path

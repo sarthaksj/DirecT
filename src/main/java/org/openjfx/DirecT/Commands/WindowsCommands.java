@@ -1,15 +1,11 @@
 package org.openjfx.DirecT.Commands;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.InputStream;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Random;
 
-import org.openjfx.DirecT.App;
 import org.openjfx.DirecT.FlowControl.DetailsJsonHandler;
 
 class Hotspot implements Runnable {

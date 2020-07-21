@@ -40,7 +40,6 @@ class ReceiveThread implements Runnable {
 
 			long total = Long.parseLong(size);
 
-
 			receive(c, total);
 
 			ProgressIndicatorHandler.setPorgress(ReceiverProgress.circularProgress, 100);

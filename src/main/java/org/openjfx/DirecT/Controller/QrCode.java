@@ -91,12 +91,12 @@ public class QrCode implements Initializable {
 	}
 
 	public static void deleteQr() {
-		//Platform.exit();
+		// Platform.exit();
 		try {
 			File f;
 			f = new File("src/main/resources/org/openjfx/Code.png");
 			f.delete();
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
