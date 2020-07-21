@@ -1,6 +1,9 @@
 package org.openjfx.DirecT.Controller;
 
+import java.awt.Desktop;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import org.openjfx.DirecT.App;
@@ -111,6 +114,13 @@ public class DeviceSelection implements Initializable {
 
 			App.setRoot("WifiDevices");
 		}
+
+	}
+
+	@FXML
+	public void feedback() throws IOException, URISyntaxException {
+		Desktop d = Desktop.getDesktop();
+		d.browse(new URI(""));
 
 	}
 

@@ -1,6 +1,9 @@
 package org.openjfx.DirecT.Controller;
 
+import java.awt.Desktop;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import org.openjfx.DirecT.App;
@@ -98,13 +101,20 @@ public class UsersSelection implements Initializable {
 		FlowControlVariables.receiver = true;
 		new FadeOut(mainPane).play();
 		try {
-			
-			//so that receiver can connect to sender's hotspot
+
+			// so that receiver can connect to sender's hotspot
 			WindowsCommands.disconnect();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		App.setRoot("DeviceSelection");
+	}
+
+	@FXML
+	public void feedback() throws IOException, URISyntaxException {
+		Desktop d = Desktop.getDesktop();
+		d.browse(new URI(""));
+
 	}
 
 	@FXML

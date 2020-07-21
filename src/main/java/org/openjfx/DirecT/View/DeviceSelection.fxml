@@ -18,7 +18,7 @@
          <children>
             <StackPane alignment="TOP_RIGHT" prefHeight="45.0" styleClass="topbottompane" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <Label fx:id="username" text="Sarthak" textFill="WHITE">
+                  <Label fx:id="username" textFill="WHITE">
                      <StackPane.margin>
                         <Insets right="15.0" top="10.0" />
                      </StackPane.margin>
@@ -58,17 +58,19 @@
             <AnchorPane fx:id="opacityPane" opacity="0.29" style="-fx-background-color: #000000;" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
             <AnchorPane fx:id="drawerPane" layoutX="10.0" layoutY="45.0" prefWidth="200.0" styleClass="sidePanel" visible="false" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="45.0">
                <children>
-                  <GridPane layoutY="37.0" prefHeight="90.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <GridPane layoutY="37.0" prefHeight="142.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                      </columnConstraints>
                      <rowConstraints>
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                        <JFXButton buttonType="RAISED" prefHeight="45.0" prefWidth="200.0" text="Mobile Application" />
+                        <JFXButton buttonType="RAISED" prefHeight="45.0" prefWidth="200.0" text="Mobile Application (Coming Soon)" />
                         <JFXButton buttonType="RAISED" onAction="#about" prefHeight="45.0" prefWidth="200.0" text="About" GridPane.rowIndex="1" />
+                        <JFXButton buttonType="RAISED" onAction="#feedback" prefHeight="46.0" prefWidth="200.0" text="Feedback" GridPane.rowIndex="2" />
                      </children>
                   </GridPane>
                </children>

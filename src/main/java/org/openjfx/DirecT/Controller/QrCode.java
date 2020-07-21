@@ -5,7 +5,6 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Hashtable;
@@ -20,7 +19,6 @@ import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import animatefx.animation.FadeIn;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -42,7 +40,7 @@ public class QrCode implements Initializable {
 		new FadeIn(mainPane).play();
 
 		String qrCodeText = "//Enter Text Here 7060621259 7906831276";
-		String filePath = "src/main/resources/org/openjfx/Code.png";
+		String filePath = "Code.png";
 		int size = 150;
 		String fileType = "png";
 		File qrFile = new File(filePath);
@@ -91,10 +89,10 @@ public class QrCode implements Initializable {
 	}
 
 	public static void deleteQr() {
-		// Platform.exit();
+	
 		try {
 			File f;
-			f = new File("src/main/resources/org/openjfx/Code.png");
+			f = new File("Code.png");
 			f.delete();
 
 		} catch (Exception e) {

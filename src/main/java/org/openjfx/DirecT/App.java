@@ -8,6 +8,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.sql.SQLException;
 import org.openjfx.DirecT.Controller.QrCode;
+import org.openjfx.DirecT.Update.Update;
 
    
 public class App extends Application {
@@ -61,7 +62,6 @@ public class App extends Application {
 	}
 
 	public static void main(String[] args) throws SQLException {
-
 		launch();
 	}
 
