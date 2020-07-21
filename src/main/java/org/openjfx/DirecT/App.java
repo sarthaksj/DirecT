@@ -5,15 +5,47 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+
+import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
+
+import org.openjfx.DirecT.Commands.WindowsCommands;
+
 import org.openjfx.DirecT.Controller.QrCode;
+import org.openjfx.DirecT.FlowControl.DetailsJsonHandler;
 import org.openjfx.DirecT.Update.Update;
 
-   
+
+class checkUpdate implements Runnable{
+
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+
+		try {
+			DetailsJsonHandler.userCount();//increase the count to the update
+		} catch (Exception e) {
+			
+			System.out.println("Hello");
+		}
+		
+		
+		try{
+			App.toUpate=DetailsJsonHandler.checkUpdateAvaialable();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+
+		
+	}
+	
+}
+
 public class App extends Application {
 
 	private static Scene scene;
+	public static boolean toUpate=false;
 
 	@Override
 	public void stop() {
@@ -33,7 +65,16 @@ public class App extends Application {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+		
+		//update if update is available
+		if(toUpate) {
+			try {
+				Update.fetchUpdate();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 
 	@Override
@@ -42,13 +83,6 @@ public class App extends Application {
 		stage.setTitle("DirecT");
 		stage.setScene(scene);
 		stage.show();
-		/*stage.setOnCloseRequest(e -> {
-			try {
-				Update.fetchUpdate();
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
-		});*/
 
 	}
 
@@ -62,6 +96,10 @@ public class App extends Application {
 	}
 
 	public static void main(String[] args) throws SQLException {
+
+		
+		new Thread(new checkUpdate()).start();
+		
 		launch();
 	}
 

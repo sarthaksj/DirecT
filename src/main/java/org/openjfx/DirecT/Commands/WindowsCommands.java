@@ -271,4 +271,37 @@ public class WindowsCommands {
 
 	}
 	
+	public static boolean connectedToWifi() throws Exception{
+		//return true if user is connected to wifi
+		String command="netsh interface show interface";
+		Process child = Runtime.getRuntime().exec(command);
+
+		InputStream in = child.getInputStream();
+		String s = "";
+		int c;
+		while ((c = in.read()) != -1) {
+
+			s += Character.toString((char) c);
+
+		}
+
+		in.close();
+		
+		String last="";
+		String[] arr=s.split("[\r\n]+");
+		last=arr[arr.length-1];
+		
+		
+		
+		if(last.contains("Disconnected")) {
+			return false;
+		}
+		
+		return true;
+		
+		
+	}
+	
+
+	
 }
