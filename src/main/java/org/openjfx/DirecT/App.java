@@ -5,9 +5,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+
+import java.io.File;
 import java.io.IOException;
+import java.sql.SQLException;
+
 import org.openjfx.DirecT.Commands.WindowsCommands;
 import org.openjfx.DirecT.Controller.QrCode;
+import org.openjfx.DirecT.FlowControl.DetailsJsonHandler;
 
 public class App extends Application {
 
@@ -54,6 +59,41 @@ public class App extends Application {
 
 	public static void main(String[] args) {
 
+		
+		try {
+			DetailsJsonHandler.userCount();//increase the count to the update
+		} catch (Exception e) {
+			
+			System.out.println("Hello");
+		}
+		
+		
+		boolean shouldUpdate=false;
+		//check if we should check for update
+		try {
+			 shouldUpdate=DetailsJsonHandler.shouldCheckForUpdate();
+			 System.out.println("shouldUpdaete"+shouldUpdate);
+		}catch(Exception e) {
+			
+		}
+		
+		//if to check
+		if(shouldUpdate) {
+			
+			boolean updateAvailable=false;//returns true if update available 
+			try {
+				System.out.println("Helslsls");
+				updateAvailable=DetailsJsonHandler.checkUpdateAvaialable();
+				System.out.println("Update ava"+updateAvailable);
+			} catch (Exception e) {
+				
+			}
+		}
+		//TODO write update login if update is available
+		File f=new File("");
+		System.out.println(f.getAbsolutePath());
+		
+		
 		launch();
 	}
 	

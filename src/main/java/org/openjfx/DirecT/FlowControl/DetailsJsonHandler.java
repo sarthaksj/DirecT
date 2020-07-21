@@ -6,6 +6,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Date;
+
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.openjfx.DirecT.Database.DbConnection;
@@ -153,10 +155,122 @@ public class DetailsJsonHandler {
 		}
 		return version;
 	}
+	
+	public static boolean shouldCheckForUpdate() {//checks for update every 7th day
+		//return true if to be checked
+		
+		
+		JSONParser jsonParser = new JSONParser();
+		String name = "";
+		boolean check=false;
+		try {
+
+			FileReader fileReader = new FileReader("src//main//resources//org//openjfx//Details//details.json");
+
+			Object obj = jsonParser.parse(fileReader);
+
+			JSONObject object = (JSONObject) obj;
+
+			String date =  (String) object.get("lastChecked");
+			
+			int t1=Integer.parseInt(date);
+			Date d=new Date();
+			int t2=d.getDate();
+			if(t1-t2>6||t1-t2<-6) {
+				check=true;
+			}else {
+				fileReader.close();
+
+				return false;
+			}
+			
+			fileReader.close();
+
+			FileWriter fileWriter = new FileWriter("src//main//resources//org//openjfx//Details//details.json");
+
+			object.put("lastChecked", Integer.toString(t2));
+			fileWriter.write(object.toString());
+			fileWriter.close();
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return check;
+		
+	}
+	
+	public static int getCurrentVesion() {
+		JSONParser jsonParser = new JSONParser();
+		String version = "";
+		boolean check=false;
+		try {
+
+			FileReader fileReader = new FileReader("src//main//resources//org//openjfx//Details//details.json");
+
+			Object obj = jsonParser.parse(fileReader);
+
+			JSONObject object = (JSONObject) obj;
+
+			version =  (String) object.get("version");
+			fileReader.close();
+			
+		}catch(Exception e) {
+			
+		}
+		
+		return Integer.parseInt(version);
+	}
+	
+	public static void setUpdateAvailableTrue() {
+		
+		JSONParser jsonParser = new JSONParser();
+		String name = "";
+		boolean check=false;
+		try {
+
+			FileReader fileReader = new FileReader("src//main//resources//org//openjfx//Details//details.json");
+
+			Object obj = jsonParser.parse(fileReader);
+
+			JSONObject object = (JSONObject) obj;
+
+			String date =  (String) object.get("updateAvailable");
+		
+			
+			fileReader.close();
+
+			FileWriter fileWriter = new FileWriter("src//main//resources//org//openjfx//Details//details.json");
+
+			object.put("updateAvailable", "true");
+			fileWriter.write(object.toString());
+			fileWriter.close();
+			
+			
+		} catch (Exception e) {
+		}
+		
+	}
+	
+	public static boolean checkUpdateAvaialable() throws Exception{
+		
+		int v1=versionCheck();
+		int v2=getCurrentVesion();
+		if(v1!=v2) {
+			return true;
+		}
+		
+		return false;
+
+		
+	}
 
 	public static void main(String[] args) throws SQLException {
 		// userCount();
 		//versionCheck();
+		//System.out.println(shouldCheckForUpdate());
+		
 	}
 
 }
