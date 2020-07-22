@@ -7,6 +7,7 @@ module org.openjfx.DirecT {
 	requires json.simple;
 	requires com.google.zxing;
 	requires AnimateFX;
+	requires javafx.graphics;
 
 	opens org.openjfx.DirecT to javafx.fxml;
 

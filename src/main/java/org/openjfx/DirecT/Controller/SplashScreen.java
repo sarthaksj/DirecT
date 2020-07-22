@@ -32,10 +32,11 @@ public class SplashScreen implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
-		boolean check = DetailsJsonHandler.ifFirstTime();// to check if the app is opened first time and to increase count every time
+		boolean check = DetailsJsonHandler.ifFirstTime();// to check if the app is opened first time and to increase
+															// count every time
 
 		try {
-			FileInputStream input = new FileInputStream("src/main/resources/org/openjfx/Icons/directLogo.jpg");
+			FileInputStream input = new FileInputStream("src/main/resources/org/openjfx/Icons/Icon.png");
 			imgView.setImage(new Image(input));
 		} catch (FileNotFoundException e1) {
 			e1.printStackTrace();
@@ -52,7 +53,7 @@ public class SplashScreen implements Initializable {
 					App.setRoot("AppIntro");
 				} else {
 
-					//increase count 
+					// increase count
 					DetailsJsonHandler.increaseCount();
 					App.setRoot("UsersSelection");
 				}
