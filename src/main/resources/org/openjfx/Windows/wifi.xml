@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <WLANProfile xmlns="http://www.microsoft.com/networking/WLAN/profile/v1">
-	<name>Sarthak_DrT27518975</name>
+	<name>Sarthak_DrT73845386</name>
 	<SSIDConfig>
 		<SSID>
 			
-			<name>Sarthak_DrT27518975</name>
+			<name>Sarthak_DrT73845386</name>
 		</SSID>
 	</SSIDConfig>
 	<connectionType>ESS</connectionType>
@@ -19,7 +19,7 @@
 			<sharedKey>
 				<keyType>passPhrase</keyType>
 				<protected>false</protected>
-				<keyMaterial>27518975</keyMaterial>
+				<keyMaterial>73845386</keyMaterial>
 			</sharedKey>
 		</security>
 	</MSM>
