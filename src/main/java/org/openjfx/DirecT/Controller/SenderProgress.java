@@ -85,7 +85,7 @@ class SendThread implements Runnable {
 					try {
 						Connection.dos.writeUTF("OK");
 
-						App.setRoot("DeviceSelection");
+						App.setRoot("UserSelection");
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
