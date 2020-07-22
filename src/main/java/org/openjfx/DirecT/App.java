@@ -17,36 +17,32 @@ import org.openjfx.DirecT.Controller.QrCode;
 import org.openjfx.DirecT.FlowControl.DetailsJsonHandler;
 import org.openjfx.DirecT.Update.Update;
 
-
-class checkUpdate implements Runnable{
+class checkUpdate implements Runnable {
 
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
 
 		try {
-			DetailsJsonHandler.userCount();//increase the count to the update
+			DetailsJsonHandler.userCount();// increase the count to the update
 		} catch (Exception e) {
-			
-			System.out.println("Hello");
+
 		}
-		
-		
-		try{
-			App.toUpate=DetailsJsonHandler.checkUpdateAvaialable();
-		}catch(Exception e) {
+
+		try {
+			App.toUpate = DetailsJsonHandler.checkUpdateAvaialable();
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		
 	}
-	
+
 }
 
 public class App extends Application {
 
 	private static Scene scene;
-	public static boolean toUpate=false;
+	public static boolean toUpate = false;
 
 	@Override
 	public void stop() {
@@ -66,9 +62,9 @@ public class App extends Application {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		//update if update is available
-		if(toUpate) {
+
+		// update if update is available
+		if (toUpate) {
 			try {
 				Update.fetchUpdate();
 			} catch (SQLException e) {
@@ -99,9 +95,8 @@ public class App extends Application {
 
 	public static void main(String[] args) throws SQLException {
 
-		
 		new Thread(new checkUpdate()).start();
-		
+
 		launch();
 	}
 
