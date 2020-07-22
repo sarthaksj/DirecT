@@ -2,6 +2,7 @@ package org.openjfx.DirecT.Connection;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import org.openjfx.DirecT.Commands.WindowsCommands;
@@ -41,8 +42,12 @@ public class Connection {
 		 * 
 		 * } System.out.println("Inside connectTorServer"); } }
 		 */
-		socket = new Socket(ip, 4444);
-
+		
+		socket=new Socket();   
+		socket.connect(new InetSocketAddress(ip,4444),120000); 
+		socket.setSoTimeout(120000);
+	//	socket = new Socket(ip, 4444);
+		
 		dos = new DataOutputStream(socket.getOutputStream());
 		dis = new DataInputStream(socket.getInputStream());
 		bos = new DataOutputStream(socket.getOutputStream());

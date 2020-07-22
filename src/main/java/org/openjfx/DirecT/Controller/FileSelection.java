@@ -120,6 +120,10 @@ public class FileSelection implements Initializable, Runnable {
 			List<File> temp;
 
 			temp = fileChooser.showOpenMultipleDialog(null);
+			if(temp==null) {
+				return;
+			}
+			
 			labelmid.setText("");
 
 			for (File f : temp) {
