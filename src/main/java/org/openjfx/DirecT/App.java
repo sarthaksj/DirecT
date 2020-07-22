@@ -54,7 +54,7 @@ public class App extends Application {
 		}
 
 		System.out.println("Hello");
-		// WindowsCommands.deleteWifiProfile();
+		WindowsCommands.deleteWifiProfile();
 		QrCode.deleteQr();
 		try {
 			Thread.sleep(2000);
