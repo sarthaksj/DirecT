@@ -7,8 +7,13 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.sql.SQLException;
 
 import org.openjfx.DirecT.Commands.WindowsCommands;
@@ -43,6 +48,8 @@ public class App extends Application {
 
 	private static Scene scene;
 	public static boolean toUpate = false;
+	public static boolean firstTime=false;
+	public static FileInputStream input;
 
 	@Override
 	public void stop() {
@@ -93,11 +100,23 @@ public class App extends Application {
 		return fxmlLoader.load();
 	}
 
-	public static void main(String[] args) throws SQLException {
+	public static void main(String[] args) throws Exception {
 
-		new Thread(new checkUpdate()).start();
+	new Thread(new checkUpdate()).start();
+		firstTime = DetailsJsonHandler.ifFirstTime();// to check if the app is opened first time and to increase
+		// count every time
+		try {
+			 input = new FileInputStream("src/main/resources/org/openjfx/Icons/Icon.png");
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	
 
 		launch();
+		
+
+		}
 	}
 
-}
