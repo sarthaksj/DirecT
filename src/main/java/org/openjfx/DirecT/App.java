@@ -36,6 +36,7 @@ class checkUpdate implements Runnable {
 
 		try {
 			App.toUpate = DetailsJsonHandler.checkUpdateAvaialable();
+			DetailsJsonHandler.setNewVersion();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -74,7 +75,7 @@ public class App extends Application {
 		if (toUpate) {
 			try {
 				Update.fetchUpdate();
-			} catch (SQLException e) {
+			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}

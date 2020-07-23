@@ -6,6 +6,12 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.FileVisitResult;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -25,12 +31,31 @@ public class Update implements Runnable {
 
 	private static File defaultdirectory = new File("");
 	private static String pathname = (defaultdirectory.getAbsolutePath() + "\\temp.zip");
+	private static String srcPath = (defaultdirectory.getAbsolutePath() + "\\src");
+	private static File src = new File(srcPath);
+	private static String directPath = (defaultdirectory.getAbsolutePath() + "\\Direct.exe");
+	File direct = new File(directPath);
 
-	public static void fetchUpdate() throws SQLException {
+	public static void fetchUpdate() throws SQLException, IOException {
+		
+		Path directory = Paths.get(src.getAbsolutePath());
+		Files.walkFileTree(directory, new SimpleFileVisitor<Path>() {
+		   @Override
+		   public FileVisitResult visitFile(Path file, BasicFileAttributes attributes) throws IOException {
+		       Files.delete(file); // this will work because it's always a File
+		       return FileVisitResult.CONTINUE;
+		   }
+
+		   @Override
+		   public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
+		       Files.delete(dir); //this will work because Files in the directory are already deleted
+		       return FileVisitResult.CONTINUE;
+		   }
+		});
 
 		link = Link();
 		out = new File(pathname);
-		new Thread(new Update(link, out)).start();
+		 new Thread(new Update(link, out)).start();
 
 	}
 
@@ -65,10 +90,10 @@ public class Update implements Runnable {
 			in.close();
 			fos.close();
 			System.out.println("Download Complete");
-			
-            //out.delete();
-			//Unzip(pathname, (defaultdirectory.getAbsolutePath()));
 
+			// out.delete();
+			 Unzip(pathname, (defaultdirectory.getAbsolutePath()));
+			 out.delete();
 			System.out.println("Update Complete");
 
 		} catch (IOException ex) {
@@ -92,6 +117,9 @@ public class Update implements Runnable {
 				// grab a zip file entry
 				ZipEntry entry = (ZipEntry) zipFileEntries.nextElement();
 				String currentEntry = entry.getName();
+				if(currentEntry.contains(".exe")) {
+					continue;
+				}
 
 				File destFile = new File(newPath, currentEntry);
 				// destFile = new File(newPath, destFile.getName());
@@ -119,8 +147,10 @@ public class Update implements Runnable {
 					is.close();
 					fos.close();
 				}
+				
 
 			}
+			zip.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -145,7 +175,7 @@ public class Update implements Runnable {
 		return link;
 	}
 
-	public static void main(String[] args) throws SQLException {
+	public static void main(String[] args) throws SQLException, IOException {
 		fetchUpdate();
 	}
 
