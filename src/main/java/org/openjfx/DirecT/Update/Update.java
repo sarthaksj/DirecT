@@ -37,24 +37,22 @@ public class Update implements Runnable {
 	private static File direct = new File(directPath);
 
 	public static void fetchUpdate() throws SQLException, IOException {
-		
-		
-		
+
+		direct.delete();
 		Path directory = Paths.get(src.getAbsolutePath());
 		Files.walkFileTree(directory, new SimpleFileVisitor<Path>() {
-		   @Override
-		   public FileVisitResult visitFile(Path file, BasicFileAttributes attributes) throws IOException {
-		       Files.delete(file); // this will work because it's always a File
-		       return FileVisitResult.CONTINUE;
-		   }
+			@Override
+			public FileVisitResult visitFile(Path file, BasicFileAttributes attributes) throws IOException {
+				Files.delete(file); // this will work because it's always a File
+				return FileVisitResult.CONTINUE;
+			}
 
-		   @Override
-		   public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
-		       Files.delete(dir); //this will work because Files in the directory are already deleted
-		       return FileVisitResult.CONTINUE;
-		   }
+			@Override
+			public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
+				Files.delete(dir); // this will work because Files in the directory are already deleted
+				return FileVisitResult.CONTINUE;
+			}
 		});
-		
 
 		link = Link();
 		out = new File(pathname);
@@ -95,8 +93,8 @@ public class Update implements Runnable {
 			System.out.println("Download Complete");
 
 			// out.delete();
-			 Unzip(pathname, (defaultdirectory.getAbsolutePath()));
-			 out.delete();
+			Unzip(pathname, (defaultdirectory.getAbsolutePath()));
+			out.delete();
 			System.out.println("Update Complete");
 
 		} catch (IOException ex) {

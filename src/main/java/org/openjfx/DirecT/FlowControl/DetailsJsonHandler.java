@@ -22,7 +22,7 @@ public class DetailsJsonHandler {
 		JSONParser jsonParser = new JSONParser();
 		try {
 
-			FileReader fileReader = new FileReader("src//main//resources//org//openjfx//Details//details.json");
+			FileReader fileReader = new FileReader("Details//details.json");
 
 			Object obj = jsonParser.parse(fileReader);
 
@@ -33,7 +33,7 @@ public class DetailsJsonHandler {
 			}
 			count++;
 			fileReader.close();
-			FileWriter fileWriter = new FileWriter("src//main//resources//org//openjfx//Details//details.json");
+			FileWriter fileWriter = new FileWriter("Details//details.json");
 
 			String c = Integer.toString(count);
 			object.put("count", c);
@@ -54,7 +54,7 @@ public class DetailsJsonHandler {
 		boolean firstTime = true;
 		try {
 
-			FileReader fileReader = new FileReader("src//main//resources//org//openjfx//Details//details.json");
+			FileReader fileReader = new FileReader("Details//details.json");
 
 			Object obj = jsonParser.parse(fileReader);
 
@@ -82,7 +82,7 @@ public class DetailsJsonHandler {
 		String name = "";
 		try {
 
-			FileReader fileReader = new FileReader("src//main//resources//org//openjfx//Details//details.json");
+			FileReader fileReader = new FileReader("Details//details.json");
 
 			Object obj = jsonParser.parse(fileReader);
 
@@ -90,6 +90,7 @@ public class DetailsJsonHandler {
 
 			int count = Integer.parseInt((String) object.get("count"));
 			name = (String) object.get("name");
+			fileReader.close();
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -112,7 +113,7 @@ public class DetailsJsonHandler {
 		boolean firstTime = true;
 		try {
 
-			FileReader fileReader = new FileReader("src//main//resources//org//openjfx//Details//details.json");
+			FileReader fileReader = new FileReader("Details//details.json");
 
 			Object obj = jsonParser.parse(fileReader);
 
@@ -120,7 +121,7 @@ public class DetailsJsonHandler {
 
 			fileReader.close();
 
-			FileWriter fileWriter = new FileWriter("src//main//resources//org//openjfx//Details//details.json");
+			FileWriter fileWriter = new FileWriter("Details//details.json");
 
 			object.put("name", name);
 			fileWriter.write(object.toString());
@@ -165,7 +166,7 @@ public class DetailsJsonHandler {
 		boolean check = false;
 		try {
 
-			FileReader fileReader = new FileReader("src//main//resources//org//openjfx//Details//details.json");
+			FileReader fileReader = new FileReader("Details//details.json");
 
 			Object obj = jsonParser.parse(fileReader);
 
@@ -186,7 +187,7 @@ public class DetailsJsonHandler {
 
 			fileReader.close();
 
-			FileWriter fileWriter = new FileWriter("src//main//resources//org//openjfx//Details//details.json");
+			FileWriter fileWriter = new FileWriter("Details//details.json");
 
 			object.put("lastChecked", Integer.toString(t2));
 			fileWriter.write(object.toString());
@@ -206,7 +207,7 @@ public class DetailsJsonHandler {
 		boolean check = false;
 		try {
 
-			FileReader fileReader = new FileReader("src//main//resources//org//openjfx//Details//details.json");
+			FileReader fileReader = new FileReader("Details//details.json");
 
 			Object obj = jsonParser.parse(fileReader);
 
@@ -229,7 +230,7 @@ public class DetailsJsonHandler {
 		boolean check = false;
 		try {
 
-			FileReader fileReader = new FileReader("src//main//resources//org//openjfx//Details//details.json");
+			FileReader fileReader = new FileReader("Details//details.json");
 
 			Object obj = jsonParser.parse(fileReader);
 
@@ -239,7 +240,7 @@ public class DetailsJsonHandler {
 
 			fileReader.close();
 
-			FileWriter fileWriter = new FileWriter("src//main//resources//org//openjfx//Details//details.json");
+			FileWriter fileWriter = new FileWriter("Details//details.json");
 
 			object.put("updateAvailable", "true");
 			fileWriter.write(object.toString());
@@ -255,7 +256,7 @@ public class DetailsJsonHandler {
 		JSONParser jsonParser = new JSONParser();
 		try {
 
-			FileReader fileReader = new FileReader("src//main//resources//org//openjfx//Details//details.json");
+			FileReader fileReader = new FileReader("Details//details.json");
 
 			Object obj = jsonParser.parse(fileReader);
 
@@ -263,7 +264,7 @@ public class DetailsJsonHandler {
 
 			fileReader.close();
 
-			FileWriter fileWriter = new FileWriter("src//main//resources//org//openjfx//Details//details.json");
+			FileWriter fileWriter = new FileWriter("Details//details.json");
 
 			object.put("version", Integer.toString(updateVersion));
 			fileWriter.write(object.toString());
@@ -280,9 +281,13 @@ public class DetailsJsonHandler {
 		int v1 = versionCheck();
 		int v2 = getCurrentVesion();
 		updateVersion=v1;
+		System.out.println("isnide check update");
 		if (v1 != v2) {
+			System.out.println("true");
+
 			return true;
 		}
+		System.out.println("false");
 
 		return false;
 
