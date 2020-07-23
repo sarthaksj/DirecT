@@ -22,11 +22,10 @@ public class About implements Initializable {
 		new FadeIn(about).play();
 		
 		Text text_about = new Text(
-				"This software holds two types of network connectivity i.e. Local Area Network and Wide Area Network\n"
-						+ "In Local Area Network, Sharing of files take place over wifi connection within nearby range of about 5 mtrs, It doesn't require any internet connection\n"
-						+ "Whereas in Wide Area Network, both devices require an active internet connection for pairing\n"
-						+ "This Software helps to share file in both Local Area Network And Wide Area Network, And the files shared can be of any type like Videos, Photos, Music, Softwares etc.\n"
+				"This software can be used to share files and folders wirelessly i.e. in Local Area Network\n"
+						+ "Sharing of files take place over wifi connection within nearby range of about 5 mtrs\n"
 						+ "It also allows a complete user friendly interface which makes sharing of files more efficient, accurate and easy along with very high speed.\n");
+		
 		about.getChildren().add(text_about);
 	}
 

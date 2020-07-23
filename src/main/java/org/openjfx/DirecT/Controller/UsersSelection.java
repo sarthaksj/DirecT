@@ -141,7 +141,7 @@ public class UsersSelection implements Initializable {
 	@FXML
 	public void feedback() throws IOException, URISyntaxException {
 		Desktop d = Desktop.getDesktop();
-		d.browse(new URI(""));
+		d.browse(new URI("https://forms.gle/3Zj1JEpKbSV8jMQa6"));
 
 	}
 
