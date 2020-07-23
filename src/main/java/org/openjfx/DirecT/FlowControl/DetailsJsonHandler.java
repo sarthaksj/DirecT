@@ -15,8 +15,8 @@ import org.openjfx.DirecT.Database.DbConnection;
 public class DetailsJsonHandler {
 	private static Connection con = DbConnection.databaseConnectivity();
 	private static Statement st;
-	public static int updateVersion;
 
+	public static int updateVersion;
 	public static void increaseCount() {
 
 		JSONParser jsonParser = new JSONParser();
@@ -137,7 +137,6 @@ public class DetailsJsonHandler {
 		String query = "update users set activeUserCount = activeUserCount+1";
 		st = con.createStatement();
 		int rs = st.executeUpdate(query);
-
 		st.close();
 	}
 
@@ -250,8 +249,9 @@ public class DetailsJsonHandler {
 		}
 
 	}
-	
+
 	public static void setNewVersion() {
+		
 		JSONParser jsonParser = new JSONParser();
 		try {
 
@@ -273,8 +273,8 @@ public class DetailsJsonHandler {
 			e.printStackTrace();
 
 		}
+		
 	}
-
 	public static boolean checkUpdateAvaialable() throws Exception {
 
 		int v1 = versionCheck();

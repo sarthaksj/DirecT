@@ -33,10 +33,12 @@ public class Update implements Runnable {
 	private static String pathname = (defaultdirectory.getAbsolutePath() + "\\temp.zip");
 	private static String srcPath = (defaultdirectory.getAbsolutePath() + "\\src");
 	private static File src = new File(srcPath);
-	private static String directPath = (defaultdirectory.getAbsolutePath() + "\\Direct.exe");
-	File direct = new File(directPath);
+	private static String directPath = (defaultdirectory.getAbsolutePath() + "\\DirecT.exe");
+	private static File direct = new File(directPath);
 
 	public static void fetchUpdate() throws SQLException, IOException {
+		
+		
 		
 		Path directory = Paths.get(src.getAbsolutePath());
 		Files.walkFileTree(directory, new SimpleFileVisitor<Path>() {
@@ -52,10 +54,11 @@ public class Update implements Runnable {
 		       return FileVisitResult.CONTINUE;
 		   }
 		});
+		
 
 		link = Link();
 		out = new File(pathname);
-		 new Thread(new Update(link, out)).start();
+		new Thread(new Update(link, out)).start();
 
 	}
 
@@ -117,9 +120,6 @@ public class Update implements Runnable {
 				// grab a zip file entry
 				ZipEntry entry = (ZipEntry) zipFileEntries.nextElement();
 				String currentEntry = entry.getName();
-				if(currentEntry.contains(".exe")) {
-					continue;
-				}
 
 				File destFile = new File(newPath, currentEntry);
 				// destFile = new File(newPath, destFile.getName());
@@ -147,7 +147,6 @@ public class Update implements Runnable {
 					is.close();
 					fos.close();
 				}
-				
 
 			}
 			zip.close();
