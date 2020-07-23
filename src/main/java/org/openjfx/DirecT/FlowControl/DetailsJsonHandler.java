@@ -135,7 +135,7 @@ public class DetailsJsonHandler {
 	}
 
 	public static void userCount() throws SQLException {
-		String query = "update users set activeUserCount = activeUserCount+1";
+		String query = "update users set activeuser = activeuser+1";
 		st = con.createStatement();
 		int rs = st.executeUpdate(query);
 		st.close();
@@ -294,12 +294,7 @@ public class DetailsJsonHandler {
 	}
 
 	public static void main(String[] args) throws SQLException {
-		// userCount();
-		// versionCheck();
-		// System.out.println(shouldCheckForUpdate());
 
-		// userCount();
-		versionCheck();
 	}
 
 }
