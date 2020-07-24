@@ -44,7 +44,7 @@ public class Connection {
 		 */
 		
 		socket=new Socket();   
-		socket.connect(new InetSocketAddress(ip,4444),120000); 
+		socket.connect(new InetSocketAddress(ip,4444),1200000); 
 		socket.setSoTimeout(120000);
 	//	socket = new Socket(ip, 4444);
 		

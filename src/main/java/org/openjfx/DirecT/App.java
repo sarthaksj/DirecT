@@ -48,7 +48,7 @@ public class App extends Application {
 
 	private static Scene scene;
 	public static boolean toUpate = false;
-	public static boolean firstTime=false;
+	public static boolean firstTime = false;
 	public static FileInputStream input;
 
 	@Override
@@ -71,7 +71,7 @@ public class App extends Application {
 		}
 
 		// update if update is available
-	
+
 		if (toUpate) {
 			try {
 				Update.fetchUpdate();
@@ -105,21 +105,19 @@ public class App extends Application {
 
 	public static void main(String[] args) throws Exception {
 
-	new Thread(new checkUpdate()).start();
+
 		firstTime = DetailsJsonHandler.ifFirstTime();// to check if the app is opened first time and to increase
 		// count every time
 		try {
-			 input = new FileInputStream("src/main/resources/org/openjfx/Icons/Icon.png");
+			input = new FileInputStream("src/main/resources/org/openjfx/Icons/Icon.png");
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-	
-
+		new Thread(new checkUpdate()).start();
 		launch();
-		
 
-		}
+
+
 	}
-
+}
