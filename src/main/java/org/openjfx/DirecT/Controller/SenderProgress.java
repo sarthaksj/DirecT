@@ -240,7 +240,7 @@ public class SenderProgress implements Initializable {
 		}
 
 		try {
-			App.setRoot("DeviceSelection");
+			App.setRoot("UsersSelection");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

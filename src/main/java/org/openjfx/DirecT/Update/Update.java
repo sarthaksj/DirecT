@@ -38,22 +38,6 @@ public class Update implements Runnable {
 
 	public static void fetchUpdate() throws SQLException, IOException {
 
-		direct.delete();
-		Path directory = Paths.get(src.getAbsolutePath());
-		Files.walkFileTree(directory, new SimpleFileVisitor<Path>() {
-			@Override
-			public FileVisitResult visitFile(Path file, BasicFileAttributes attributes) throws IOException {
-				Files.delete(file); // this will work because it's always a File
-				return FileVisitResult.CONTINUE;
-			}
-
-			@Override
-			public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
-				Files.delete(dir); // this will work because Files in the directory are already deleted
-				return FileVisitResult.CONTINUE;
-			}
-		});
-
 		link = Link();
 		out = new File(pathname);
 		new Thread(new Update(link, out)).start();
@@ -92,7 +76,6 @@ public class Update implements Runnable {
 			fos.close();
 			System.out.println("Download Complete");
 
-			// out.delete();
 			Unzip(pathname, (defaultdirectory.getAbsolutePath()));
 			out.delete();
 			System.out.println("Update Complete");
@@ -102,7 +85,24 @@ public class Update implements Runnable {
 		}
 	}
 
-	public static void Unzip(String zipFile, String extractFolder) {
+	public static void Unzip(String zipFile, String extractFolder) throws IOException {
+
+		direct.delete();
+		Path directory = Paths.get(src.getAbsolutePath());
+		Files.walkFileTree(directory, new SimpleFileVisitor<Path>() {
+			@Override
+			public FileVisitResult visitFile(Path file, BasicFileAttributes attributes) throws IOException {
+				Files.delete(file); // this will work because it's always a File
+				return FileVisitResult.CONTINUE;
+			}
+
+			@Override
+			public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
+				Files.delete(dir); // this will work because Files in the directory are already deleted
+				return FileVisitResult.CONTINUE;
+			}
+		});
+
 		try {
 			int BUFFER = 2048;
 			File file = new File(zipFile);

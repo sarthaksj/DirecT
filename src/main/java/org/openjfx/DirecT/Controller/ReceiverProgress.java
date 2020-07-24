@@ -244,7 +244,7 @@ public class ReceiverProgress implements Initializable {
 		}
 
 		try {
-			App.setRoot("DeviceSelection");
+			App.setRoot("UsersSelection");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
