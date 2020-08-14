@@ -8,6 +8,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import org.openjfx.DirecT.App;
 import org.openjfx.DirecT.Commands.WindowsCommands;
+import org.openjfx.DirecT.Connection.Connection;
 import org.openjfx.DirecT.FlowControl.DetailsJsonHandler;
 import org.openjfx.DirecT.FlowControl.FlowControlVariables;
 import animatefx.animation.FadeIn;
@@ -47,6 +48,20 @@ public class UsersSelection implements Initializable {
 		FlowControlVariables.sendReceive=false;
 		
 		FileSelection.connectionEstablished=false;
+		
+		try {
+			Connection.socket.close();
+
+		}catch(Exception e) {
+			
+		}
+		
+		try {
+			Connection.serverSocket.close();
+
+		}catch(Exception e) {
+			
+		}
 		
 		new FadeIn(mainPane).play();
 
