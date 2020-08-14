@@ -44,11 +44,9 @@ public class FileSelection implements Initializable {
 	@FXML
 	private Button selection, send;
 
-	@SuppressWarnings("exports")
 	@FXML
 	public ProgressIndicator waitRing;
 
-	@SuppressWarnings("exports")
 	public static ProgressIndicator waitRing2;
 
 	private static FlowPane tile2;
@@ -65,7 +63,7 @@ public class FileSelection implements Initializable {
 
 	public static HashMap<String, ArrayList<String>> fileListWithParent;// parent,file paths for that parent folder
 
-	private static boolean connectionEstablished;
+	public static boolean connectionEstablished;
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
@@ -151,15 +149,6 @@ public class FileSelection implements Initializable {
 			temp = event.getDragboard().getFiles();
 			labelmid.setText("");
 
-			/*
-			 * for (File f : temp) { if (!fileList.contains(f)) { fileList.add(f); count++;
-			 * String name = (Integer.toString(count) + ". " +
-			 * f.getAbsolutePath().substring(f.getAbsolutePath().lastIndexOf("\\") + 1));
-			 * 
-			 * setThumbnail(f, name); }
-			 * 
-			 * }
-			 */
 			for (File f : temp) {
 
 				if (!fileChecker.contains(f.getAbsolutePath())) {
@@ -351,7 +340,7 @@ public class FileSelection implements Initializable {
 			// to true to proceed
 			waitRing();
 
-		}else {
+		} else {
 			App.setRoot("SenderProgress");
 
 		}

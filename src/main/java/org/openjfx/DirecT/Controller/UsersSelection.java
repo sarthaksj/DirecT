@@ -44,6 +44,9 @@ public class UsersSelection implements Initializable {
 		FlowControlVariables.receiver=false;
 		FlowControlVariables.laptop=false;
 		FlowControlVariables.mobile=false;
+		
+		FileSelection.connectionEstablished=false;
+		
 		new FadeIn(mainPane).play();
 
 		username.setText(DetailsJsonHandler.getName());

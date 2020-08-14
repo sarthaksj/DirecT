@@ -42,7 +42,7 @@ class SendThread {
 			// convert total to string
 			String size = Long.toString(total);
 			Connection.dos.writeUTF(size);// total size sent
-			
+
 			SenderProgress.waitRing2.setVisible(false);
 
 			SenderProgress.circularProgress.setVisible(true);
@@ -146,38 +146,39 @@ public class SenderProgress implements Initializable {
 	@FXML
 	private JFXListView<String> filelList;
 
-	public static JFXListView<String> fileList2;
 	@FXML
 	private Label username;
 
 	@FXML
 	private JFXButton send;
+
 	@FXML
 	private ProgressIndicator waitRing;
-	
-	public static ProgressIndicator waitRing2;
+
 	@FXML
 	private JFXButton disconnect;
 
-	@SuppressWarnings("exports")
+	public static ProgressIndicator waitRing2;
+
 	public static JFXButton send2;
-	@SuppressWarnings("exports")
+
 	public static JFXButton disconnect2;
 
-	@SuppressWarnings("exports")
+	public static JFXListView<String> fileList2;
+
 	public static FillProgressIndicator circularProgress;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		new FadeIn(vBox).play();
 		username.setText(DetailsJsonHandler.getName());
 		fileList2 = filelList;
-		waitRing2=waitRing;
-
+		waitRing2 = waitRing;
 		send2 = send;
 		disconnect2 = disconnect;
+
 		send.setVisible(false);
 		disconnect.setVisible(false);
-		new FadeIn(vBox).play();
 
 		FillProgressIndicator fpi = new FillProgressIndicator();
 
