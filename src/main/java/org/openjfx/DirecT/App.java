@@ -1,49 +1,42 @@
 package org.openjfx.DirecT;
 
 import javafx.application.Application;
+import javafx.concurrent.Service;
+import javafx.concurrent.Task;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-
-import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.sql.SQLException;
-
 import org.openjfx.DirecT.Commands.WindowsCommands;
 import org.openjfx.DirecT.Connection.Connection;
 import org.openjfx.DirecT.Controller.QrCode;
 import org.openjfx.DirecT.FlowControl.DetailsJsonHandler;
 import org.openjfx.DirecT.Update.Update;
 
-class checkUpdate implements Runnable {
+class CheckUpdate {
 
-	@Override
-	public void run() {
-		// TODO Auto-generated method stub
+	public void update() {
 
 		try {
 
-			Connection.socket.close();
+			//Connection.socket.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		try {
 
-			Connection.serverSocket.close();
+		//	Connection.serverSocket.close();
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
 		try {
-			// DetailsJsonHandler.userCount();// increase the count to the update
+			 DetailsJsonHandler.userCount();// increase the count to the update
 		} catch (Exception e) {
 
 		}
@@ -70,7 +63,7 @@ public class App extends Application {
 		try {
 			super.stop();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 
@@ -79,7 +72,6 @@ public class App extends Application {
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -91,7 +83,6 @@ public class App extends Application {
 				DetailsJsonHandler.setNewVersion();
 
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -116,11 +107,35 @@ public class App extends Application {
 		return fxmlLoader.load();
 	}
 
+	private static void updater() {
+
+		Service<Void> emailService = new Service<Void>() {
+			@Override
+			protected Task<Void> createTask() {
+				return new Task<Void>() {
+					@Override
+					protected Void call() throws Exception {
+						CheckUpdate updt = new CheckUpdate();
+						updt.update();
+						return null;
+					}
+
+				};
+			}
+
+		};
+		emailService.start();
+	}
+
 	public static void main(String[] args) throws Exception {
 
 		firstTime = DetailsJsonHandler.ifFirstTime();// to check if the app is opened first time and to increase
 		// count every time
-		new Thread(new checkUpdate()).start();
+
+		
+//		CheckUpdate updt = new CheckUpdate();
+	//	updt.update();
+		updater();
 		launch();
 
 	}

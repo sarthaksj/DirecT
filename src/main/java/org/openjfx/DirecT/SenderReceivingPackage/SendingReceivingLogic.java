@@ -136,22 +136,3 @@ public class SendingReceivingLogic {
 	}
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

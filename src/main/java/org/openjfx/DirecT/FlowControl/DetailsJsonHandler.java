@@ -7,7 +7,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Date;
-
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.openjfx.DirecT.Database.DbConnection;
@@ -145,9 +144,8 @@ public class DetailsJsonHandler {
 	}
 
 	public static int versionCheck() throws SQLException {
-
-		int version = 0;
-		String query = "select version from users";
+		int version = 1;
+    	String query = "select version from users";
 		st = con.createStatement();
 		ResultSet rs = st.executeQuery(query);
 		while (rs.next()) {
@@ -157,6 +155,7 @@ public class DetailsJsonHandler {
 		con.close();
 		st.close();
 		rs.close();
+		
 		return version;
 
 	}
@@ -284,7 +283,7 @@ public class DetailsJsonHandler {
 		int v1 = versionCheck();
 		int v2 = getCurrentVesion();
 		updateVersion=v1;
-		System.out.println("isnide check update");
+		System.out.println("inside check update");
 		if (v1 != v2) {
 			System.out.println("true");
 
