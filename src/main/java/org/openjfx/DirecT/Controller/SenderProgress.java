@@ -17,15 +17,17 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
 import animatefx.animation.FadeIn;
 import javafx.application.Platform;
+import javafx.concurrent.Service;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.layout.VBox;
 
-class SendThread implements Runnable {
+class SendThread {
 
-	@Override
-	public void run() {
+	public void startSending() {
 
 		try {
 
@@ -55,14 +57,17 @@ class SendThread implements Runnable {
 		SenderProgress.disconnect2.setVisible(true);
 
 		// now listen for send button
+
 		String s = "";
 		try {
 			s = Connection.dis.readUTF();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+
 		if (s.equals("send")) {
 			Platform.runLater(new Runnable() {
+
 				@Override
 				public void run() {
 
@@ -78,6 +83,7 @@ class SendThread implements Runnable {
 			});
 		} else if (s.equals("disconnect")) {
 			Platform.runLater(new Runnable() {
+
 				@Override
 				public void run() {
 					FlowControlVariables.sendReceive = false;
@@ -93,6 +99,7 @@ class SendThread implements Runnable {
 				}
 			});
 		}
+
 	}
 
 	public static void send(long total) throws Exception {
@@ -141,6 +148,8 @@ public class SenderProgress implements Initializable {
 
 	@FXML
 	private JFXButton send;
+	@FXML
+	private ProgressIndicator waitRing;
 
 	@FXML
 	private JFXButton disconnect;
@@ -172,27 +181,74 @@ public class SenderProgress implements Initializable {
 
 		ProgressIndicatorHandler.setPorgress(circularProgress, 0);
 
-		// first send directory structure to receiver to make similar directory
-		// structure
-		for (String s : FileSelection.dirList) {
-			try {
-				Connection.dos.writeUTF(s);
-			} catch (Exception e) {
-				e.printStackTrace();
+		sendDirectoryStructure();
+
+	}
+
+	private void sendDirectoryStructure() {
+
+		Service<Void> dir = new Service<Void>() {
+			@Override
+			protected Task<Void> createTask() {
+				return new Task<Void>() {
+					@Override
+					protected Void call() throws Exception {
+
+						circularProgress.setVisible(false);
+						waitRing.setVisible(true);
+
+						// first send directory structure to receiver to make similar directory
+						// structure
+						for (String s : FileSelection.dirList) {
+							try {
+								Connection.dos.writeUTF(s);
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+						}
+
+						// to tell receiver that directory structure is completed
+						try {
+							Connection.dos.writeUTF(" completed ");
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+
+						send();
+						FlowControlVariables.sendReceive = true;
+						waitRing.setVisible(false);
+
+						circularProgress.setVisible(true);
+
+						return null;
+					}
+
+				};
 			}
-		}
 
-		// to tell receiver that directory structure is completed
-		try {
-			Connection.dos.writeUTF(" completed ");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		};
+		dir.start();
 
-		Thread t = new Thread(new SendThread());
-		t.start();
+	}
 
-		FlowControlVariables.sendReceive = true;
+	private void send() {
+		Service<Void> send = new Service<Void>() {
+			@Override
+			protected Task<Void> createTask() {
+				return new Task<Void>() {
+					@Override
+					protected Void call() throws Exception {
+
+						new SendThread().startSending();
+
+						return null;
+					}
+
+				};
+			}
+
+		};
+		send.start();
 
 	}
 
@@ -233,6 +289,12 @@ public class SenderProgress implements Initializable {
 		}
 		try {
 			Connection.socket.close();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		try {
 			Connection.serverSocket.close();
 
 		} catch (Exception e) {

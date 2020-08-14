@@ -12,10 +12,13 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.openjfx.DirecT.Database.DbConnection;
 
+import javafx.concurrent.Service;
+import javafx.concurrent.Task;
+
 public class DetailsJsonHandler {
 	private static Connection con = DbConnection.databaseConnectivity();
 	private static Statement st;
-
+	
 	public static int updateVersion;
 	public static void increaseCount() {
 

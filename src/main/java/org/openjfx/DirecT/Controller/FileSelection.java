@@ -14,6 +14,8 @@ import org.openjfx.DirecT.FlowControl.FlowControlVariables;
 import org.openjfx.DirecT.FolderStructure.MakeStructure;
 import com.jfoenix.controls.JFXScrollPane;
 import animatefx.animation.FadeIn;
+import javafx.concurrent.Service;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
@@ -31,7 +33,7 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.FileChooser;
 
-public class FileSelection implements Initializable, Runnable {
+public class FileSelection implements Initializable {
 
 	@FXML
 	private JFXScrollPane scrollPane;
@@ -120,10 +122,10 @@ public class FileSelection implements Initializable, Runnable {
 			List<File> temp;
 
 			temp = fileChooser.showOpenMultipleDialog(null);
-			if(temp==null) {
+			if (temp == null) {
 				return;
 			}
-			
+
 			labelmid.setText("");
 
 			for (File f : temp) {
@@ -316,7 +318,7 @@ public class FileSelection implements Initializable, Runnable {
 		}
 
 	}
-	
+
 	@FXML
 	private void dragOverhandle(DragEvent event) throws Exception {
 
@@ -327,7 +329,6 @@ public class FileSelection implements Initializable, Runnable {
 		}
 	}
 
-	
 	// Sending Logic Here
 
 	@FXML
@@ -348,34 +349,46 @@ public class FileSelection implements Initializable, Runnable {
 			waitRing2.setVisible(true);
 			// call a thread to establish a connection which will set connectionEstablished
 			// to true to proceed
-			new Thread(new FileSelection()).start();
+			waitRing();
 
-		} else {
-
-			waitRing2.setVisible(false);
-
+		}else {
 			App.setRoot("SenderProgress");
-		}
 
+		}
 	}
 
-	
+	private void waitRing() {
+		Service<Void> waitRing = new Service<Void>() {
+			@Override
+			protected Task<Void> createTask() {
+				return new Task<Void>() {
+					@Override
+					protected Void call() throws Exception {
 
-	@Override
-	public void run() {
-		// open the serverSocket and accept any incoming connections
-		try {
-			if (!FlowControlVariables.sendReceive)
-				Connection.openServer();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		connectionEstablished = true;
-		try {
-			sendFiles();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+						// open the serverSocket and accept any incoming connections
+						try {
+							if (!FlowControlVariables.sendReceive)
+								Connection.openServer();
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+						connectionEstablished = true;
+						waitRing2.setVisible(false);
+						try {
 
+							App.setRoot("SenderProgress");
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+
+						return null;
+					}
+
+				};
+			}
+
+		};
+		waitRing.start();
 	}
+
 }

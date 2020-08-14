@@ -15,17 +15,19 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
 import animatefx.animation.FadeIn;
 import javafx.application.Platform;
+import javafx.concurrent.Service;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
 
-class ReceiveThread implements Runnable {
+class ReceiveThread  {
 
-	@Override
-	public void run() {
+	public void startReceving() {
 
 		try {
 
@@ -64,13 +66,14 @@ class ReceiveThread implements Runnable {
 			e.printStackTrace();
 		}
 		if (s.equals("send")) {
+		
 			Platform.runLater(new Runnable() {
 				@Override
 				public void run() {
 
 					try {
-
 						Connection.dos.writeUTF("OK");
+
 						App.setRoot("ReceiverProgress");
 					} catch (IOException e) {
 						e.printStackTrace();
@@ -78,6 +81,8 @@ class ReceiveThread implements Runnable {
 
 				}
 			});
+			
+
 		} else if (s.equals("disconnect")) {
 			Platform.runLater(new Runnable() {
 				@Override
@@ -126,6 +131,9 @@ public class ReceiverProgress implements Initializable {
 	public static JFXListView<String> fileList2;
 
 	@FXML
+	private ProgressIndicator waitRing;
+	
+	@FXML
 	private Label username;
 
 	@FXML
@@ -165,40 +173,89 @@ public class ReceiverProgress implements Initializable {
 		chooser.setTitle("Select Location To Save Files");
 		File selectedDirectory = chooser.showDialog(null);
 		folderPath = selectedDirectory.getAbsolutePath();
-
-		ProgressIndicatorHandler.setPorgress(circularProgress, 0);
-
 		try {
-			if (!FlowControlVariables.sendReceive)
+			if (!FlowControlVariables.sendReceive) {
 				Connection.connectToServer();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		// get directory structure
-		try {
-
-			while (true) {
-
-				String str = Connection.dis.readUTF();
-				if (str.equals(" completed ")) {
-
-					break;
-				} else {
-
-					String path = folderPath + "//" + str;
-					File f = new File(path);
-					f.mkdir();
-				}
 
 			}
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		Thread t = new Thread(new ReceiveThread());
-		t.start();
+		ProgressIndicatorHandler.setPorgress(circularProgress, 0);
+		getDirectoryStructure();
 
-		FlowControlVariables.sendReceive = true;
+	}
+	
+	private void getDirectoryStructure() {
+		
+		Service<Void> dir = new Service<Void>() {
+			@Override
+			protected Task<Void> createTask() {
+				return new Task<Void>() {
+					@Override
+					protected Void call() throws Exception {
+						circularProgress.setVisible(false);
+						waitRing.setVisible(true);
+						// get directory structure
+						try {
+
+							while (true) {
+
+								String str = Connection.dis.readUTF();
+								if (str.equals(" completed ")) {
+
+									break;
+								} else {
+
+									String path = folderPath + "//" + str;
+									File f = new File(path);
+									f.mkdir();
+								}
+
+							}
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+
+						receive();
+						waitRing.setVisible(false);
+						circularProgress.setVisible(true);
+
+
+						FlowControlVariables.sendReceive = true;
+						
+						return null;
+					}
+
+				};
+			}
+
+		};
+		dir.start();
+
+		
+	}
+
+	private void receive() {
+
+		Service<Void> receive = new Service<Void>() {
+			@Override
+			protected Task<Void> createTask() {
+				return new Task<Void>() {
+					@Override
+					protected Void call() throws Exception {
+						ReceiveThread obj=new ReceiveThread();
+						obj.startReceving();
+						return null;
+					}
+
+				};
+			}
+
+		};
+		receive.start();
 
 	}
 
@@ -239,6 +296,13 @@ public class ReceiverProgress implements Initializable {
 		try {
 
 			Connection.socket.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		try {
+
+			Connection.serverSocket.close();
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

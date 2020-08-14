@@ -9,11 +9,16 @@ import java.util.ResourceBundle;
 
 import org.openjfx.DirecT.App;
 import org.openjfx.DirecT.Commands.WindowsCommands;
+import org.openjfx.DirecT.Connection.Connection;
 import org.openjfx.DirecT.FlowControl.BackHandler;
 import org.openjfx.DirecT.FlowControl.DetailsJsonHandler;
+import org.openjfx.DirecT.FlowControl.FlowControlVariables;
+
 import com.jfoenix.controls.JFXButton;
 import animatefx.animation.FadeIn;
 import javafx.application.Platform;
+import javafx.concurrent.Service;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -24,26 +29,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
-
-class RunCommands implements Runnable {
-
-	@Override
-	public void run() {
-		try {
-
-			WindowsCommands.deleteProfile();
-			WindowsCommands.connectProfile();
-			WindowsCommands.connect();
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-	}
-
-}
-
-
 
 public class WifiDevices implements Initializable {
 
@@ -73,12 +58,11 @@ public class WifiDevices implements Initializable {
 	public void initialize(URL url, ResourceBundle rb) {
 
 		try {
-			WindowsCommands.disconnect();//to ensure if the receiver is not connected to any netwrok double check
+			WindowsCommands.disconnect();// to ensure if the receiver is not connected to any netwrok double check
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
-		
-		
+
 		new FadeIn(vBoxCont).play();
 		username.setText(DetailsJsonHandler.getName());
 		usersNetwork = new HashMap<>();
@@ -89,28 +73,59 @@ public class WifiDevices implements Initializable {
 		displayedNetworks = new ArrayList<>();
 		threadNetworks = new ArrayList<>();
 
-		Runnable task = new Runnable() {
-			public void run() {
-				try {
-					deviceInfo();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		};
+		callDeviceInfo();
 
-		// Run the task in a background thread
-		Thread backgroundThread = new Thread(task);
-		// Terminate the running thread if the application exits
-		backgroundThread.setDaemon(true);
-		// Start the thread
-		backgroundThread.start();
+	}
+
+	private void callDeviceInfo() {
+		Service<Void> callDeviceInfo = new Service<Void>() {
+			@Override
+			protected Task<Void> createTask() {
+				return new Task<Void>() {
+					@Override
+					protected Void call() throws Exception {
+
+						deviceInfo();
+						return null;
+					}
+
+				};
+			}
+
+		};
+		callDeviceInfo.start();
+	}
+
+	private void runCommands() {
+		Service<Void> runCommands = new Service<Void>() {
+			@Override
+			protected Task<Void> createTask() {
+				return new Task<Void>() {
+					@Override
+					protected Void call() throws Exception {
+
+						try {
+
+							WindowsCommands.deleteProfile();
+							WindowsCommands.connectProfile();
+							WindowsCommands.connect();
+
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+
+						return null;
+					}
+
+				};
+			}
+
+		};
+		runCommands.start();
 
 	}
 
 	private void deviceInfo() throws Exception {
-
-		// for (String network : WindowsCommands.availableNetworks()) {
 
 		while (toRefresh) {
 
@@ -132,7 +147,6 @@ public class WifiDevices implements Initializable {
 						password = network.substring(index + 4);
 						network = network.substring(0, index);
 						usersNetwork.put(password, network);
-						
 
 					} else {
 						continue;
@@ -152,24 +166,22 @@ public class WifiDevices implements Initializable {
 							EventHandler<ActionEvent> event = new EventHandler<ActionEvent>() {
 								public void handle(ActionEvent e) {
 
-									
-									toRefresh=false;
+									toRefresh = false;
 									WindowsCommands.name = name + "_DrT" + pass;
 									WindowsCommands.password = pass;
 
-									Thread t = new Thread(new RunCommands());
-									t.start();
+									runCommands();
+									/*
+									 * try { Thread.sleep(500); } catch (InterruptedException e1) { // TODO
+									 * Auto-generated catch block e1.printStackTrace(); }
+									 */
 									try {
-										Thread.sleep(500);
-									} catch (InterruptedException e1) {
-										// TODO Auto-generated catch block
-										e1.printStackTrace();
-									}
-									try {
+										toRefresh=false;
 										App.setRoot("ReceiverProgress");
-									} catch (IOException e2) {
+									} catch (Exception e2) {
 										e2.printStackTrace();
 									}
+									
 
 								}
 
@@ -190,11 +202,12 @@ public class WifiDevices implements Initializable {
 				}
 
 			}
-			Thread.sleep(2000);
 
 		}
 
 	}
+
+	
 
 	@FXML
 	private void back() throws IOException {

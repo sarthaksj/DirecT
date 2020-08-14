@@ -13,7 +13,7 @@ public class BackHandler {
 	public static void ThreadBreak() throws IOException {
 
 		WifiDevices.toRefresh = false;// don't refresh available network list now
-		App.setRoot("DeviceSelection");
+		App.setRoot("UsersSelection");
 	}
 	
 

@@ -17,7 +17,7 @@ import java.io.InputStreamReader;
 import java.sql.SQLException;
 
 import org.openjfx.DirecT.Commands.WindowsCommands;
-
+import org.openjfx.DirecT.Connection.Connection;
 import org.openjfx.DirecT.Controller.QrCode;
 import org.openjfx.DirecT.FlowControl.DetailsJsonHandler;
 import org.openjfx.DirecT.Update.Update;
@@ -29,7 +29,21 @@ class checkUpdate implements Runnable {
 		// TODO Auto-generated method stub
 
 		try {
-			DetailsJsonHandler.userCount();// increase the count to the update
+
+			Connection.socket.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		try {
+
+			Connection.serverSocket.close();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		try {
+			// DetailsJsonHandler.userCount();// increase the count to the update
 		} catch (Exception e) {
 
 		}
@@ -105,19 +119,16 @@ public class App extends Application {
 
 	public static void main(String[] args) throws Exception {
 
-
 		firstTime = DetailsJsonHandler.ifFirstTime();// to check if the app is opened first time and to increase
 		// count every time
 		try {
-			input = new FileInputStream("src/main/resources/org/openjfx/Icons/Icon.png");
+			input = new FileInputStream("src/main/resources/org/openjfx/Icons/Icon.jpg");
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		new Thread(new checkUpdate()).start();
 		launch();
-
-
 
 	}
 }

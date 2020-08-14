@@ -5,68 +5,9 @@ import java.io.FileWriter;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Random;
-
 import org.openjfx.DirecT.FlowControl.DetailsJsonHandler;
-
-class Hotspot implements Runnable {
-
-	
-	@Override
-	public void run() {
-		try {
-			
-
-			String name = DetailsJsonHandler.getName() + "_DrT";
-			String password = generatePassword();
-			name += password;
-
-			
-			
-			
-			
-			
-			
-			//space for easy to read
-			String c="powershell.exe \"Add-Type -AssemblyName System.Runtime.WindowsRuntime; $asTaskGeneric = ([System.WindowsRuntimeSystemExtensions].GetMethods() | ? { $_.Name -eq 'AsTask' -and $_.GetParameters().Count -eq 1 -and $_.GetParameters()[0].ParameterType.Name -eq 'IAsyncOperation`1' })[0]; Function Await($WinRtTask, $ResultType) {     $asTask = $asTaskGeneric.MakeGenericMethod($ResultType);     $netTask = $asTask.Invoke($null, @($WinRtTask));     $netTask.Wait(-1) | Out-Null;     $netTask.Result; } Function AwaitAction($WinRtAction) {     $asTask = ([System.WindowsRuntimeSystemExtensions].GetMethods() | ? { $_.Name -eq 'AsTask' -and $_.GetParameters().Count -eq 1 -and !$_.IsGenericMethod })[0];     $netTask = $asTask.Invoke($null, @($WinRtAction));     $netTask.Wait(-1) | Out-Null; }   $connectionProfile = [Windows.Networking.Connectivity.NetworkInformation,Windows.Networking.Connectivity,ContentType=WindowsRuntime]::GetInternetConnectionProfile(); $tetheringManager=[Windows.Networking.NetworkOperators.NetworkOperatorTetheringManager,Windows.Networking.NetworkOperators,ContentType=WindowsRuntime]::createFromConnectionProfile($connectionProfile);  $configuration = new-object Windows.Networking.NetworkOperators.NetworkOperatorTetheringAccessPointConfiguration; $configuration.Ssid = 'test'; $configuration.Passphrase = '12345678';  [enum]::GetValues([Windows.Networking.NetworkOperators.TetheringWiFiBand]); $configuration | Get-Member ;   $tetheringManager.TetheringOperationalState;   AwaitAction ($tetheringManager.ConfigureAccessPointAsync($configuration));   Await ($tetheringManager.StartTetheringAsync()) ([Windows.Networking.NetworkOperators.NetworkOperatorTetheringOperationResult]);  \"\n" ;
-			
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-			c = c.replace("test", name);
-			c = c.replace("12345678", password);
-
-			Process child = Runtime.getRuntime().exec(c);
-			Thread.sleep(2000);
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-	}
-
-	public static String generatePassword() {
-
-		// name + _dir + 4digits (digits ranging from 1-9)
-		String password = "";
-		Random rn = new Random();
-
-		for (int i = 1; i < 9; i++) {
-			int j = rn.nextInt(10) + 1;
-			password += j;
-
-		}
-		return password;
-	}
-
-}
+import javafx.concurrent.Service;
+import javafx.concurrent.Task;
 
 public class WindowsCommands {
 
@@ -253,27 +194,79 @@ public class WindowsCommands {
 		return ip;
 
 	}
-	
+
 	public static void deleteWifiProfile() {
 		try {
-			
-			File f=new File("src/main/resources/org/openjfx/Windows/wifi.xml");
+
+			File f = new File("src/main/resources/org/openjfx/Windows/wifi.xml");
 			f.delete();
-			
-		}catch(Exception e) {
+
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
+	public static String generatePassword() {
+
+		// name + _dir + 4digits (digits ranging from 1-9)
+		String password = "";
+		Random rn = new Random();
+
+		for (int i = 1; i < 9; i++) {
+			int j = rn.nextInt(10) + 1;
+			password += j;
+
+		}
+		return password;
+	}
+
 	public static void openHotspot() throws Exception {
 
-		new Thread(new Hotspot()).start();
+		Service<Void> hotspot = new Service<Void>() {
+			@Override
+			protected Task<Void> createTask() {
+				return new Task<Void>() {
+					@Override
+					protected Void call() throws Exception {
+						System.out.println("inside hotspot thread");
+						try {
+
+							if(name.equals("")&&password.equals("")) {
+								String name = DetailsJsonHandler.getName() + "_DrT";
+								String password = generatePassword();
+								name += password;
+								
+							}
+						
+
+							// space for easy to read
+							String c = "powershell.exe \"Add-Type -AssemblyName System.Runtime.WindowsRuntime; $asTaskGeneric = ([System.WindowsRuntimeSystemExtensions].GetMethods() | ? { $_.Name -eq 'AsTask' -and $_.GetParameters().Count -eq 1 -and $_.GetParameters()[0].ParameterType.Name -eq 'IAsyncOperation`1' })[0]; Function Await($WinRtTask, $ResultType) {     $asTask = $asTaskGeneric.MakeGenericMethod($ResultType);     $netTask = $asTask.Invoke($null, @($WinRtTask));     $netTask.Wait(-1) | Out-Null;     $netTask.Result; } Function AwaitAction($WinRtAction) {     $asTask = ([System.WindowsRuntimeSystemExtensions].GetMethods() | ? { $_.Name -eq 'AsTask' -and $_.GetParameters().Count -eq 1 -and !$_.IsGenericMethod })[0];     $netTask = $asTask.Invoke($null, @($WinRtAction));     $netTask.Wait(-1) | Out-Null; }   $connectionProfile = [Windows.Networking.Connectivity.NetworkInformation,Windows.Networking.Connectivity,ContentType=WindowsRuntime]::GetInternetConnectionProfile(); $tetheringManager=[Windows.Networking.NetworkOperators.NetworkOperatorTetheringManager,Windows.Networking.NetworkOperators,ContentType=WindowsRuntime]::createFromConnectionProfile($connectionProfile);  $configuration = new-object Windows.Networking.NetworkOperators.NetworkOperatorTetheringAccessPointConfiguration; $configuration.Ssid = 'test'; $configuration.Passphrase = '12345678';  [enum]::GetValues([Windows.Networking.NetworkOperators.TetheringWiFiBand]); $configuration | Get-Member ;   $tetheringManager.TetheringOperationalState;   AwaitAction ($tetheringManager.ConfigureAccessPointAsync($configuration));   Await ($tetheringManager.StartTetheringAsync()) ([Windows.Networking.NetworkOperators.NetworkOperatorTetheringOperationResult]);  \"\n";
+
+							c = c.replace("test", name);
+							c = c.replace("12345678", password);
+
+							Process child = Runtime.getRuntime().exec(c);
+						//	Thread.sleep(1000);
+
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+
+						return null;
+
+					}
+
+				};
+			}
+
+		};
+		hotspot.start();
 
 	}
-	
-	public static boolean connectedToWifi() throws Exception{
-		//return true if user is connected to wifi
-		String command="netsh interface show interface";
+
+	public static boolean connectedToWifi() throws Exception {
+		// return true if user is connected to wifi
+		String command = "netsh interface show interface";
 		Process child = Runtime.getRuntime().exec(command);
 
 		InputStream in = child.getInputStream();
@@ -286,22 +279,17 @@ public class WindowsCommands {
 		}
 
 		in.close();
-		
-		String last="";
-		String[] arr=s.split("[\r\n]+");
-		last=arr[arr.length-1];
-		
-		
-		
-		if(last.contains("Disconnected")) {
+
+		String last = "";
+		String[] arr = s.split("[\r\n]+");
+		last = arr[arr.length - 1];
+
+		if (last.contains("Disconnected")) {
 			return false;
 		}
-		
-		return true;
-		
-		
-	}
-	
 
-	
+		return true;
+
+	}
+
 }
