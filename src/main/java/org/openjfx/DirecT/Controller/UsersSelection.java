@@ -44,6 +44,7 @@ public class UsersSelection implements Initializable {
 		FlowControlVariables.receiver=false;
 		FlowControlVariables.laptop=false;
 		FlowControlVariables.mobile=false;
+		FlowControlVariables.sendReceive=false;
 		
 		FileSelection.connectionEstablished=false;
 		
