@@ -38,6 +38,12 @@ public class UsersSelection implements Initializable {
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
+		
+		
+		FlowControlVariables.sender=false;
+		FlowControlVariables.receiver=false;
+		FlowControlVariables.laptop=false;
+		FlowControlVariables.mobile=false;
 		new FadeIn(mainPane).play();
 
 		username.setText(DetailsJsonHandler.getName());
