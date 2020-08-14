@@ -291,19 +291,7 @@ public class SenderProgress implements Initializable {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		try {
-			Connection.socket.close();
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		try {
-			Connection.serverSocket.close();
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	
 
 		try {
 			App.setRoot("UsersSelection");

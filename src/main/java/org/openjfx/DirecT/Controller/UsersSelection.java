@@ -48,20 +48,7 @@ public class UsersSelection implements Initializable {
 		FlowControlVariables.sendReceive=false;
 		
 		FileSelection.connectionEstablished=false;
-		
-		try {
-			Connection.socket.close();
 
-		}catch(Exception e) {
-			
-		}
-		
-		try {
-			Connection.serverSocket.close();
-
-		}catch(Exception e) {
-			
-		}
 		
 		new FadeIn(mainPane).play();
 
@@ -111,6 +98,21 @@ public class UsersSelection implements Initializable {
 				translateTransition1.play();
 			}
 		});
+		
+		
+		try {
+			Connection.socket.close();
+
+		}catch(Exception e) {
+			
+		}
+		
+		try {
+			Connection.serverSocket.close();
+
+		}catch(Exception e) {
+			
+		}
 
 	}
 
