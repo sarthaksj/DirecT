@@ -25,7 +25,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
 
-class ReceiveThread  {
+class ReceiveThread {
 
 	public void startReceving() {
 
@@ -37,8 +37,6 @@ class ReceiveThread  {
 			String count = Connection.dis.readUTF();
 
 			int c = Integer.parseInt(count);
-
-			// dis.close();
 
 			long total = Long.parseLong(size);
 
@@ -66,7 +64,7 @@ class ReceiveThread  {
 			e.printStackTrace();
 		}
 		if (s.equals("send")) {
-		
+
 			Platform.runLater(new Runnable() {
 				@Override
 				public void run() {
@@ -81,7 +79,6 @@ class ReceiveThread  {
 
 				}
 			});
-			
 
 		} else if (s.equals("disconnect")) {
 			Platform.runLater(new Runnable() {
@@ -124,80 +121,103 @@ public class ReceiverProgress implements Initializable {
 
 	@FXML
 	private VBox vBox;
-
 	@FXML
 	private JFXListView<String> filelList;
-
-	public static JFXListView<String> fileList2;
-
+	@FXML
+	private StackPane progressPane;
 	@FXML
 	private ProgressIndicator waitRing;
-	
 	@FXML
 	private Label username;
-
 	@FXML
 	private JFXButton send;
-
 	@FXML
 	private JFXButton disconnect;
 
 	public static JFXButton send2;
 	public static JFXButton disconnect2;
-
-	@FXML
-	private StackPane progressPane;
-
+	public static JFXListView<String> fileList2;
 	public static String folderPath;
-
 	public static FillProgressIndicator circularProgress;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		username.setText(DetailsJsonHandler.getName());
-		fileList2 = filelList;
-
-		send2 = send;
-		disconnect2 = disconnect;
-		send.setVisible(false);
-		disconnect.setVisible(false);
 		new FadeIn(vBox).play();
 
-		FillProgressIndicator fpi = new FillProgressIndicator();
+		username.setText(DetailsJsonHandler.getName());
 
+		FillProgressIndicator fpi = new FillProgressIndicator();
 		vBox.getChildren().add(fpi);
 
+		fileList2 = filelList;
+		send2 = send;
+		disconnect2 = disconnect;
 		circularProgress = fpi;
+
+		send.setVisible(false);
+		disconnect.setVisible(false);
 
 		DirectoryChooser chooser = new DirectoryChooser();
 		chooser.setTitle("Select Location To Save Files");
 		File selectedDirectory = chooser.showDialog(null);
 		folderPath = selectedDirectory.getAbsolutePath();
-		try {
-			if (!FlowControlVariables.sendReceive) {
-				Connection.connectToServer();
-
-			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 
 		ProgressIndicatorHandler.setPorgress(circularProgress, 0);
+		connectLoop();
+
 		getDirectoryStructure();
 
 	}
-	
+
+	private void connectLoop() {
+
+		Service<Void> connectL = new Service<Void>() {
+			@Override
+			protected Task<Void> createTask() {
+				return new Task<Void>() {
+					@Override
+					protected Void call() throws Exception {
+
+						try {
+							if (!FlowControlVariables.sendReceive) {
+								Connection.connectToServer();
+
+							}
+
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+						return null;
+					}
+
+				};
+			}
+
+		};
+		connectL.start();
+
+	}
+
 	private void getDirectoryStructure() {
-		
+
+		circularProgress.setVisible(false);
+		waitRing.setVisible(true);
+		while (!Connection.receiverConnected) {
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
 		Service<Void> dir = new Service<Void>() {
 			@Override
 			protected Task<Void> createTask() {
 				return new Task<Void>() {
 					@Override
 					protected Void call() throws Exception {
-						circularProgress.setVisible(false);
-						waitRing.setVisible(true);
+
 						// get directory structure
 						try {
 
@@ -223,9 +243,8 @@ public class ReceiverProgress implements Initializable {
 						waitRing.setVisible(false);
 						circularProgress.setVisible(true);
 
-
 						FlowControlVariables.sendReceive = true;
-						
+
 						return null;
 					}
 
@@ -235,7 +254,6 @@ public class ReceiverProgress implements Initializable {
 		};
 		dir.start();
 
-		
 	}
 
 	private void receive() {
@@ -246,7 +264,7 @@ public class ReceiverProgress implements Initializable {
 				return new Task<Void>() {
 					@Override
 					protected Void call() throws Exception {
-						ReceiveThread obj=new ReceiveThread();
+						ReceiveThread obj = new ReceiveThread();
 						obj.startReceving();
 						return null;
 					}

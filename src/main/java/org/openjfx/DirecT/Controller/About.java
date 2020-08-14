@@ -11,21 +11,18 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 
 public class About implements Initializable {
-	
 
 	@FXML
 	public TextFlow about;
 
-
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 		new FadeIn(about).play();
-		
+
 		Text text_about = new Text(
-				"This software can be used to share files and folders wirelessly i.e. in Local Area Network\n"
-						+ "Sharing of files take place over wifi connection within nearby range of about 5 mtrs\n"
+				"This software can be used to share files and folders wirelessly i.e. in Local Area Network Sharing of files take place over wifi connection\n"
 						+ "It also allows a complete user friendly interface which makes sharing of files more efficient, accurate and easy along with very high speed.\n");
-		
+
 		about.getChildren().add(text_about);
 	}
 

@@ -7,17 +7,11 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
-import java.nio.file.Paths;
 import java.util.ResourceBundle;
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 import org.openjfx.DirecT.App;
 import org.openjfx.DirecT.FlowControl.DetailsJsonHandler;
 
@@ -32,11 +26,17 @@ public class SplashScreen implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
+		FileInputStream input = null;
 		try {
+			input = new FileInputStream("src/main/resources/org/openjfx/Icons/Icon.jpg");
+		} catch (FileNotFoundException e1) {
+			e1.printStackTrace();
+		}
+		imgView.setImage(new Image(input));
+		try {
+			input.close();
+		} catch (IOException e1) {
 
-			imgView.setImage(new Image(App.input));
-			App.input.close();
-		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
 

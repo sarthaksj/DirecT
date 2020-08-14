@@ -74,7 +74,6 @@ public class App extends Application {
 			e.printStackTrace();
 		}
 
-		System.out.println("Hello");
 		WindowsCommands.deleteWifiProfile();
 		QrCode.deleteQr();
 		try {
@@ -121,12 +120,6 @@ public class App extends Application {
 
 		firstTime = DetailsJsonHandler.ifFirstTime();// to check if the app is opened first time and to increase
 		// count every time
-		try {
-			input = new FileInputStream("src/main/resources/org/openjfx/Icons/Icon.jpg");
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		new Thread(new checkUpdate()).start();
 		launch();
 

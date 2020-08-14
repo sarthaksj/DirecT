@@ -67,11 +67,16 @@ public class FileSelection implements Initializable {
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
+		new FadeIn(scrollPane).play();
 
 		waitRing.setVisible(false);
 		waitRing2 = waitRing;
 
-		new FadeIn(scrollPane).play();
+		fileChecker = new ArrayList<>();
+		fileList = new ArrayList<>();
+		dirList = new ArrayList<>();
+		fileListWithParent = new HashMap<>();
+
 		FlowPane tile = new FlowPane();
 		VBox box = null;
 		tile.setPadding(new Insets(25, 0, 5, 50));
@@ -79,13 +84,6 @@ public class FileSelection implements Initializable {
 		tile.setHgap(10);
 		tile2 = tile;
 		box2 = box;
-
-		fileChecker = new ArrayList<>();
-		fileList = new ArrayList<>();
-
-		dirList = new ArrayList<>();
-
-		fileListWithParent = new HashMap<>();
 
 		scrollPane.setContent(tile);
 

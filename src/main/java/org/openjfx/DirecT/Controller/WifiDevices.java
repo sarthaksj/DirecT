@@ -6,14 +6,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
-
 import org.openjfx.DirecT.App;
 import org.openjfx.DirecT.Commands.WindowsCommands;
-import org.openjfx.DirecT.Connection.Connection;
 import org.openjfx.DirecT.FlowControl.BackHandler;
 import org.openjfx.DirecT.FlowControl.DetailsJsonHandler;
-import org.openjfx.DirecT.FlowControl.FlowControlVariables;
-
 import com.jfoenix.controls.JFXButton;
 import animatefx.animation.FadeIn;
 import javafx.application.Platform;
@@ -42,6 +38,7 @@ public class WifiDevices implements Initializable {
 	private JFXButton button;
 	@FXML
 	private Label username;
+
 	private VBox wifiPane;
 
 	public static boolean toRefresh;
@@ -65,13 +62,13 @@ public class WifiDevices implements Initializable {
 
 		new FadeIn(vBoxCont).play();
 		username.setText(DetailsJsonHandler.getName());
+
 		usersNetwork = new HashMap<>();
-
 		wifiPane = new VBox();
-
-		toRefresh = true;
 		displayedNetworks = new ArrayList<>();
 		threadNetworks = new ArrayList<>();
+
+		toRefresh = true;
 
 		callDeviceInfo();
 
@@ -171,17 +168,13 @@ public class WifiDevices implements Initializable {
 									WindowsCommands.password = pass;
 
 									runCommands();
-									/*
-									 * try { Thread.sleep(500); } catch (InterruptedException e1) { // TODO
-									 * Auto-generated catch block e1.printStackTrace(); }
-									 */
+
 									try {
-										toRefresh=false;
+										toRefresh = false;
 										App.setRoot("ReceiverProgress");
 									} catch (Exception e2) {
 										e2.printStackTrace();
 									}
-									
 
 								}
 
@@ -206,8 +199,6 @@ public class WifiDevices implements Initializable {
 		}
 
 	}
-
-	
 
 	@FXML
 	private void back() throws IOException {

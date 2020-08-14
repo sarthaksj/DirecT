@@ -172,19 +172,18 @@ public class SenderProgress implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		new FadeIn(vBox).play();
 		username.setText(DetailsJsonHandler.getName());
+
+		FillProgressIndicator fpi = new FillProgressIndicator();
+		vBox.getChildren().add(fpi);
+
 		fileList2 = filelList;
 		waitRing2 = waitRing;
 		send2 = send;
 		disconnect2 = disconnect;
+		circularProgress = fpi;
 
 		send.setVisible(false);
 		disconnect.setVisible(false);
-
-		FillProgressIndicator fpi = new FillProgressIndicator();
-
-		vBox.getChildren().add(fpi);
-
-		circularProgress = fpi;
 
 		ProgressIndicatorHandler.setPorgress(circularProgress, 0);
 
@@ -291,7 +290,6 @@ public class SenderProgress implements Initializable {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-	
 
 		try {
 			App.setRoot("UsersSelection");

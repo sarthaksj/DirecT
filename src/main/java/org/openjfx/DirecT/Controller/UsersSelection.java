@@ -39,21 +39,17 @@ public class UsersSelection implements Initializable {
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
-		
-		
-		FlowControlVariables.sender=false;
-		FlowControlVariables.receiver=false;
-		FlowControlVariables.laptop=false;
-		FlowControlVariables.mobile=false;
-		FlowControlVariables.sendReceive=false;
-		
-		FileSelection.connectionEstablished=false;
-
-		
 		new FadeIn(mainPane).play();
-
 		username.setText(DetailsJsonHandler.getName());
 		opacityPane.setVisible(false);
+
+		FlowControlVariables.sender = false;
+		FlowControlVariables.receiver = false;
+		FlowControlVariables.laptop = false;
+		FlowControlVariables.mobile = false;
+		FlowControlVariables.sendReceive = false;
+		Connection.receiverConnected = false;
+		FileSelection.connectionEstablished = false;
 
 		FadeTransition fadeTransition = new FadeTransition(Duration.seconds(0.2), opacityPane);
 		fadeTransition.setFromValue(1);
@@ -98,20 +94,19 @@ public class UsersSelection implements Initializable {
 				translateTransition1.play();
 			}
 		});
-		
-		
+
 		try {
 			Connection.socket.close();
 
-		}catch(Exception e) {
-			
+		} catch (Exception e) {
+
 		}
-		
+
 		try {
 			Connection.serverSocket.close();
 
-		}catch(Exception e) {
-			
+		} catch (Exception e) {
+
 		}
 
 	}
@@ -120,33 +115,33 @@ public class UsersSelection implements Initializable {
 	private void sender() throws IOException {
 
 		FlowControlVariables.sender = true;
-		
-		//check if sender is connected to a wifi
-		boolean isConnected=true;
+
+		// check if sender is connected to a wifi
+		boolean isConnected = true;
 		try {
 			isConnected = WindowsCommands.connectedToWifi();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		if(!isConnected) {
-			
+		if (!isConnected) {
+
 			Alert alert = new Alert(Alert.AlertType.INFORMATION);
 			alert.setTitle("No Connection Available");
 			alert.setHeaderText("");
 			alert.setContentText("Please make sure you are connected to a wifi network");
 			alert.showAndWait();
 			return;
-			
+
 		}
-		
-		//has to open a hotspot here now 
+
+		// has to open a hotspot here now
 		try {
 			WindowsCommands.openHotspot();
 		} catch (Exception e) {
 
 		}
-		
+
 		App.setRoot("FileSelection");
 	}
 
