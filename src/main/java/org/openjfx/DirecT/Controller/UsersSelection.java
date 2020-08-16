@@ -121,29 +121,7 @@ public class UsersSelection implements Initializable {
 		
 		
 		
-		Service<Void> server = new Service<Void>() {
-			@Override
-			protected Task<Void> createTask() {
-				return new Task<Void>() {
-					@Override
-					protected Void call() throws Exception {
-
-						// open the serverSocket and accept any incoming connections
-						try {
-							if (!FlowControlVariables.sendReceive)
-								Connection.openServer();
-						} catch (Exception e) {
-							e.printStackTrace();
-						}					
-
-						return null;
-					}
-
-				};
-			}
-
-		};
-		server.start();
+		
 
 		// check if sender is connected to a wifi
 		boolean isConnected = true;
@@ -171,6 +149,29 @@ public class UsersSelection implements Initializable {
 
 		}
 
+		Service<Void> server = new Service<Void>() {
+			@Override
+			protected Task<Void> createTask() {
+				return new Task<Void>() {
+					@Override
+					protected Void call() throws Exception {
+
+						// open the serverSocket and accept any incoming connections
+						try {
+							if (!FlowControlVariables.sendReceive)
+								Connection.openServer();
+						} catch (Exception e) {
+							e.printStackTrace();
+						}					
+
+						return null;
+					}
+
+				};
+			}
+
+		};
+		server.start();
 		App.setRoot("FileSelection");
 	}
 

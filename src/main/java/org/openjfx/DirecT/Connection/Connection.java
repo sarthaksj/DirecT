@@ -31,6 +31,7 @@ public class Connection {
 		bos = new DataOutputStream(socket.getOutputStream());
 		is = new DataInputStream(socket.getInputStream());
 		senderConnected=true;
+		receiverConnected=true;
 
 
 	}

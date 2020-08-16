@@ -12,6 +12,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.SQLException;
 import org.openjfx.DirecT.Commands.WindowsCommands;
+import org.openjfx.DirecT.Connection.Connection;
 import org.openjfx.DirecT.Controller.QrCode;
 import org.openjfx.DirecT.FlowControl.DetailsJsonHandler;
 import org.openjfx.DirecT.Update.Update;
@@ -20,19 +21,7 @@ class CheckUpdate {
 
 	public void update() {
 
-		try {
-
-			//Connection.socket.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		try {
-
-		//	Connection.serverSocket.close();
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		
 
 		try {
 			// DetailsJsonHandler.userCount();// increase the count to the update
@@ -54,6 +43,7 @@ public class App extends Application {
 
 	@Override
 	public void stop() throws IOException {
+		
 		try {
 			super.stop();
 		} catch (Exception e) {
@@ -61,14 +51,25 @@ public class App extends Application {
 			e.printStackTrace();
 		}
 		
+		try {
+
+			Connection.socket.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		try {
+
+			Connection.serverSocket.close();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		
+		
 		WindowsCommands.deleteWifiProfile();
 		QrCode.deleteQr();
-		/*try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}*/
-
+		
 		// update if update is available
 
 		if (toUpdate) {
