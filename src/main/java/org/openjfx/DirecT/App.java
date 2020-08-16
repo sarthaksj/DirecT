@@ -15,6 +15,7 @@ import org.openjfx.DirecT.Commands.WindowsCommands;
 import org.openjfx.DirecT.Connection.Connection;
 import org.openjfx.DirecT.Controller.QrCode;
 import org.openjfx.DirecT.FlowControl.DetailsJsonHandler;
+import org.openjfx.DirecT.Update.Update;
 
 public class App extends Application {
 
@@ -22,6 +23,7 @@ public class App extends Application {
 	public static boolean toUpdate = false;
 	public static boolean firstTime = false;
 	public static FileInputStream input;
+	public static boolean toExtract=false;
 
 	@Override
 	public void stop() throws IOException {
@@ -45,6 +47,15 @@ public class App extends Application {
 
 		WindowsCommands.deleteWifiProfile();
 		QrCode.deleteQr();
+		
+		if(toExtract) {
+			Update.Unzip(Update.pathname, (Update.defaultdirectory.getAbsolutePath()));
+			Update.out.delete();
+			
+			
+			System.out.println("Update Complete");
+		}
+		
 
 	}
 

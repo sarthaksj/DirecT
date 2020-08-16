@@ -57,19 +57,16 @@ public class Updates implements Initializable {
 						System.out.println(App.toUpdate);
 						if (App.toUpdate) {
 
-							ringProgress.setProgress(0);
-
-							msg.setText("Fetching Updates From the Server\n" + "        Please Wait...");
-
 							Platform.runLater(new Runnable() {
 
 								@Override
 								public void run() {
-									msg.setText("Fetching Updates From the Server\n" + "        Please Wait...");
+									ringProgress.setProgress(0);
+									msg.setText("Fetching Updates From the Server\n" + "\t\t\tPlease Wait...");
 
 								}
 							});
-
+							App.toExtract=true;
 							Update.fetchUpdate();
 							
 						} else {

@@ -28,10 +28,9 @@ import javafx.application.Platform;
 public class Update implements Runnable {
 
 	private static String link;
-	private static File out;
-
-	private static File defaultdirectory = new File("");
-	private static String pathname = (defaultdirectory.getAbsolutePath() + "\\temp.zip");
+	public static File out;
+	public static File defaultdirectory = new File("");
+	public static String pathname = (defaultdirectory.getAbsolutePath() + "\\temp.zip");
 	private static String srcPath = (defaultdirectory.getAbsolutePath() + "\\src");
 	private static File src = new File(srcPath);
 	private static String directPath = (defaultdirectory.getAbsolutePath() + "\\DirecT.exe");
@@ -72,7 +71,15 @@ public class Update implements Runnable {
 				System.out.println("Downloaded " + percent + "% of file");
 
 				int set = (int) percentDownloaded;
-				Updates.ringProgress.setProgress(set);
+
+				Platform.runLater(new Runnable() {
+
+					@Override
+					public void run() {
+						Updates.ringProgress.setProgress(set);
+
+					}
+				});
 
 			}
 			bos.close();
@@ -81,12 +88,8 @@ public class Update implements Runnable {
 			System.out.println("Download Complete");
 
 			DetailsJsonHandler.setNewVersion();
-
 			Platform.exit();
 
-			Unzip(pathname, (defaultdirectory.getAbsolutePath()));
-			out.delete();
-			System.out.println("Update Complete");
 
 		} catch (IOException ex) {
 			ex.printStackTrace();
