@@ -1,10 +1,10 @@
 package org.openjfx.DirecT.Controller;
 
-import java.io.IOException; 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import org.openjfx.DirecT.App;
-import org.openjfx.DirecT.Connection.Connection;
+import org.openjfx.DirecT.Database.DbConnection;
 import org.openjfx.DirecT.FlowControl.BackHandler;
 import org.openjfx.DirecT.FlowControl.DetailsJsonHandler;
 import org.openjfx.DirecT.Update.Update;
@@ -33,8 +33,12 @@ public class Updates implements Initializable {
 		RingProgressIndicator rpi = new RingProgressIndicator();
 		ringProgress = rpi;
 		mainPane2 = mainPane;
+
+		if (DetailsJsonHandler.con == null) {
+			DetailsJsonHandler.con = DbConnection.databaseConnectivity();
+		}
 		updateApp();
-		
+
 	}
 
 	private void updateApp() {
@@ -48,14 +52,12 @@ public class Updates implements Initializable {
 						ringProgress.makeIndeterminate();
 
 						msg.setText("Checking For Updates...");
-						
-						App.toUpdate = DetailsJsonHandler.checkUpdateAvaialable();
 
+						App.toUpdate = DetailsJsonHandler.checkUpdateAvaialable();
+						System.out.println(App.toUpdate);
 						if (App.toUpdate) {
 
-							
 							ringProgress.setProgress(0);
-
 
 							msg.setText("Fetching Updates From the Server\n" + "        Please Wait...");
 
@@ -64,30 +66,27 @@ public class Updates implements Initializable {
 								@Override
 								public void run() {
 									msg.setText("Fetching Updates From the Server\n" + "        Please Wait...");
-									
 
 								}
 							});
-							
-							Update.fetchUpdate();
-			
 
+							Update.fetchUpdate();
+							
 						} else {
 							System.out.println("inside checker");
 							ringProgress.setVisible(false);
-					
+
 							Platform.runLater(new Runnable() {
 
 								@Override
 								public void run() {
 									msg.setText("\t\t\t\t\tHurrah!!!\n"
 											+ "You're Updated With The Latest Version Of The Application");
-									
 
 								}
 							});
-							
-							Thread.sleep(2000);
+
+							Thread.sleep(1000);
 							App.setRoot("UsersSelection");
 						}
 

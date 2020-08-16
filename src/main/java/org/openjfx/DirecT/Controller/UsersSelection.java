@@ -51,7 +51,7 @@ public class UsersSelection implements Initializable {
 		FlowControlVariables.mobile = false;
 		FlowControlVariables.sendReceive = false;
 		Connection.receiverConnected = false;
-		Connection.senderConnected=false;
+		Connection.senderConnected = false;
 		FileSelection.connectionEstablished = false;
 
 		FadeTransition fadeTransition = new FadeTransition(Duration.seconds(0.2), opacityPane);
@@ -118,10 +118,6 @@ public class UsersSelection implements Initializable {
 	private void sender() throws IOException {
 
 		FlowControlVariables.sender = true;
-		
-		
-		
-		
 
 		// check if sender is connected to a wifi
 		boolean isConnected = true;
@@ -162,7 +158,7 @@ public class UsersSelection implements Initializable {
 								Connection.openServer();
 						} catch (Exception e) {
 							e.printStackTrace();
-						}					
+						}
 
 						return null;
 					}
@@ -205,6 +201,23 @@ public class UsersSelection implements Initializable {
 
 	@FXML
 	private void updates() throws Exception {
+		// check if sender is connected to a wifi
+		boolean isConnected = true;
+		try {
+			isConnected = WindowsCommands.connectedToWifi();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		if (!isConnected) {
+			Alert alert = new Alert(Alert.AlertType.INFORMATION);
+			alert.setTitle("No Internet Connection Available");
+			alert.setHeaderText("");
+			alert.setContentText("Please Make Sure You Are Connected To A Internet Network");
+			alert.showAndWait();
+			return;
+
+		}
+
 		App.setRoot("Update");
 	}
 }

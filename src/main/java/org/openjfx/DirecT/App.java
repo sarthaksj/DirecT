@@ -69,7 +69,7 @@ public class App extends Application {
 
 	private static void userCount() {
 
-		Service<Void> emailService = new Service<Void>() {
+		Service<Void> update = new Service<Void>() {
 			@Override
 			protected Task<Void> createTask() {
 				return new Task<Void>() {
@@ -87,14 +87,13 @@ public class App extends Application {
 			}
 
 		};
-		emailService.start();
+		update.start();
 	}
 
 	public static void main(String[] args) throws Exception {
 
 		firstTime = DetailsJsonHandler.ifFirstTime();// to check if the app is opened first time and to increase
-		// count every time
-
+		// count every time when user enter in the application
 		userCount();
 		launch();
 

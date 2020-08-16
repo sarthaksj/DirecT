@@ -19,13 +19,10 @@ import java.sql.Statement;
 import java.util.Enumeration;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
-
 import javax.net.ssl.HttpsURLConnection;
-
 import org.openjfx.DirecT.Controller.Updates;
 import org.openjfx.DirecT.Database.DbConnection;
 import org.openjfx.DirecT.FlowControl.DetailsJsonHandler;
-
 import javafx.application.Platform;
 
 public class Update implements Runnable {
@@ -73,19 +70,18 @@ public class Update implements Runnable {
 				percentDownloaded = (download * 100) / fileSize;
 				String percent = String.format("%.4f", percentDownloaded);
 				System.out.println("Downloaded " + percent + "% of file");
-				
-				int set=(int)percentDownloaded;
+
+				int set = (int) percentDownloaded;
 				Updates.ringProgress.setProgress(set);
-				
+
 			}
 			bos.close();
 			in.close();
 			fos.close();
 			System.out.println("Download Complete");
-			
+
 			DetailsJsonHandler.setNewVersion();
-			
-			
+
 			Platform.exit();
 
 			Unzip(pathname, (defaultdirectory.getAbsolutePath()));

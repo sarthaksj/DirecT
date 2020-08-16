@@ -12,7 +12,7 @@ import org.json.simple.parser.JSONParser;
 import org.openjfx.DirecT.Database.DbConnection;
 
 public class DetailsJsonHandler {
-	private static Connection con = DbConnection.databaseConnectivity();
+	public static Connection con = DbConnection.databaseConnectivity();
 	private static Statement st;
 
 	public static int updateVersion;
@@ -151,7 +151,6 @@ public class DetailsJsonHandler {
 			version = rs.getInt(1);
 			System.out.println("Version " + version);
 		}
-		con.close();
 		st.close();
 		rs.close();
 
