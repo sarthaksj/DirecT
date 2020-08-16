@@ -29,6 +29,7 @@ public class Connection {
 		dis = new DataInputStream(socket.getInputStream());
 		bos = new DataOutputStream(socket.getOutputStream());
 		is = new DataInputStream(socket.getInputStream());
+
 		senderConnected = true;
 		receiverConnected = true;
 

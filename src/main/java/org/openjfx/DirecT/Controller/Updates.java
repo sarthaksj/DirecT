@@ -4,10 +4,13 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import org.openjfx.DirecT.App;
+import org.openjfx.DirecT.Connection.Connection;
 import org.openjfx.DirecT.FlowControl.BackHandler;
 import org.openjfx.DirecT.FlowControl.DetailsJsonHandler;
+import org.openjfx.DirecT.Update.Update;
 import org.pdfsam.ui.RingProgressIndicator;
 import animatefx.animation.FadeIn;
+import javafx.application.Platform;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
@@ -31,7 +34,7 @@ public class Updates implements Initializable {
 		ringProgress = rpi;
 		mainPane2 = mainPane;
 		updateApp();
-
+		
 	}
 
 	private void updateApp() {
@@ -50,15 +53,33 @@ public class Updates implements Initializable {
 						App.toUpdate = DetailsJsonHandler.checkUpdateAvaialable();
 
 						if (App.toUpdate) {
+
 							
-							ringProgress.setProgress(50);
+							ringProgress.setProgress(0);
+
 							msg.setText("Fetching Updates From the Server\n" + "        Please Wait...");
+							
+							Update.fetchUpdate();
+							DetailsJsonHandler.setNewVersion();
+							
+
 						} else {
 							System.out.println("inside checker");
 							ringProgress.setVisible(false);
 					
-							/*msg.setText("                    Hurrah!!!\n"
-									+ "You're Updated With The Latest Version Of The Application");*/
+							
+							
+							Platform.runLater(new Runnable() {
+
+								@Override
+								public void run() {
+									msg.setText("\t\t\t\t\tHurrah!!!\n"
+											+ "You're Updated With The Latest Version Of The Application");
+									
+
+								}
+							});
+							
 							Thread.sleep(2000);
 							App.setRoot("UsersSelection");
 						}
