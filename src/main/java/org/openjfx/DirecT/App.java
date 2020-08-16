@@ -1,6 +1,7 @@
 package org.openjfx.DirecT;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.fxml.FXMLLoader;
@@ -20,8 +21,6 @@ import org.openjfx.DirecT.Update.Update;
 class CheckUpdate {
 
 	public void update() {
-
-		
 
 		try {
 			// DetailsJsonHandler.userCount();// increase the count to the update
@@ -123,6 +122,7 @@ public class App extends Application {
 	}
 
 	public static void main(String[] args) throws Exception {
+		
 
 		firstTime = DetailsJsonHandler.ifFirstTime();// to check if the app is opened first time and to increase
 		//count every time

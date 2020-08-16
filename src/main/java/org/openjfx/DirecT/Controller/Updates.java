@@ -47,17 +47,23 @@ public class Updates implements Initializable {
 						mainPane.getChildren().add(ringProgress);
 						ringProgress.makeIndeterminate();
 
-						if (ringProgress.isIndeterminate() == true) {
-							msg.setText("Checking For Updates...");
-						}
+						msg.setText("Checking For Updates...");
+						
 						App.toUpdate = DetailsJsonHandler.checkUpdateAvaialable();
 
 						if (App.toUpdate) {
 							ringProgress.setProgress(0);
-							msg.setText("Fetching Updates From the Server\n" + "        Please Wait...");
+							Platform.runLater(new Runnable() {
+
+								@Override
+								public void run() {
+									msg.setText("Fetching Updates From the Server\n" + "        Please Wait...");
+									
+
+								}
+							});
 							
 							Update.fetchUpdate();
-							DetailsJsonHandler.setNewVersion();
 							
 
 						} else {
