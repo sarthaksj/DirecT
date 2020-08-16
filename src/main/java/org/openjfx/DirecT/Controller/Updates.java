@@ -50,6 +50,7 @@ public class Updates implements Initializable {
 						App.toUpdate = DetailsJsonHandler.checkUpdateAvaialable();
 
 						if (App.toUpdate) {
+							
 							ringProgress.setProgress(50);
 							msg.setText("Fetching Updates From the Server\n" + "        Please Wait...");
 						} else {
