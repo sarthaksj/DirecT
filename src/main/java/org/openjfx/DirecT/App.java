@@ -12,7 +12,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.SQLException;
 import org.openjfx.DirecT.Commands.WindowsCommands;
-import org.openjfx.DirecT.Connection.Connection;
 import org.openjfx.DirecT.Controller.QrCode;
 import org.openjfx.DirecT.FlowControl.DetailsJsonHandler;
 import org.openjfx.DirecT.Update.Update;
@@ -36,16 +35,11 @@ class CheckUpdate {
 		}
 
 		try {
-			 DetailsJsonHandler.userCount();// increase the count to the update
+			// DetailsJsonHandler.userCount();// increase the count to the update
 		} catch (Exception e) {
 
 		}
 
-		try {
-			App.toUpate = DetailsJsonHandler.checkUpdateAvaialable();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 
 	}
 
@@ -54,30 +48,30 @@ class CheckUpdate {
 public class App extends Application {
 
 	private static Scene scene;
-	public static boolean toUpate = false;
+	public static boolean toUpdate = false;
 	public static boolean firstTime = false;
 	public static FileInputStream input;
 
 	@Override
-	public void stop() {
+	public void stop() throws IOException {
 		try {
 			super.stop();
 		} catch (Exception e) {
 
 			e.printStackTrace();
 		}
-
+		
 		WindowsCommands.deleteWifiProfile();
 		QrCode.deleteQr();
-		try {
+		/*try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
-		}
+		}*/
 
 		// update if update is available
 
-		if (toUpate) {
+		if (toUpdate) {
 			try {
 				Update.fetchUpdate();
 				DetailsJsonHandler.setNewVersion();
@@ -130,12 +124,9 @@ public class App extends Application {
 	public static void main(String[] args) throws Exception {
 
 		firstTime = DetailsJsonHandler.ifFirstTime();// to check if the app is opened first time and to increase
-		// count every time
-
+		//count every time
 		
-//		CheckUpdate updt = new CheckUpdate();
-	//	updt.update();
-		updater();
+	//	updater();
 		launch();
 
 	}

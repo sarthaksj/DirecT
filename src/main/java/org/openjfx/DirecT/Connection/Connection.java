@@ -12,6 +12,8 @@ public class Connection {
 	public static ServerSocket serverSocket;// will be used by the sender in the laptop to laptop commincation
 	public static Socket socket;
 	public static boolean receiverConnected=false;
+	public static boolean senderConnected=false;
+
 
 	public static DataOutputStream dos;
 	public static DataInputStream dis;
@@ -27,6 +29,8 @@ public class Connection {
 		dis = new DataInputStream(socket.getInputStream());
 		bos = new DataOutputStream(socket.getOutputStream());
 		is = new DataInputStream(socket.getInputStream());
+		senderConnected=true;
+
 
 	}
 

@@ -15,6 +15,8 @@ import animatefx.animation.FadeIn;
 import animatefx.animation.FadeOut;
 import javafx.animation.FadeTransition;
 import javafx.animation.TranslateTransition;
+import javafx.concurrent.Service;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -27,13 +29,13 @@ import javafx.util.Duration;
 public class UsersSelection implements Initializable {
 
 	@FXML
-	private AnchorPane opacityPane, drawerPane;
+	private AnchorPane drawerPane;
 	@FXML
 	private Button drawerIcon;
 	@FXML
 	private Button sender, receiver;
 	@FXML
-	private StackPane mainPane;
+	private StackPane mainPane, opacityPane;
 	@FXML
 	private Label username;
 
@@ -49,6 +51,7 @@ public class UsersSelection implements Initializable {
 		FlowControlVariables.mobile = false;
 		FlowControlVariables.sendReceive = false;
 		Connection.receiverConnected = false;
+		Connection.senderConnected=false;
 		FileSelection.connectionEstablished = false;
 
 		FadeTransition fadeTransition = new FadeTransition(Duration.seconds(0.2), opacityPane);
@@ -115,6 +118,32 @@ public class UsersSelection implements Initializable {
 	private void sender() throws IOException {
 
 		FlowControlVariables.sender = true;
+		
+		
+		
+		Service<Void> server = new Service<Void>() {
+			@Override
+			protected Task<Void> createTask() {
+				return new Task<Void>() {
+					@Override
+					protected Void call() throws Exception {
+
+						// open the serverSocket and accept any incoming connections
+						try {
+							if (!FlowControlVariables.sendReceive)
+								Connection.openServer();
+						} catch (Exception e) {
+							e.printStackTrace();
+						}					
+
+						return null;
+					}
+
+				};
+			}
+
+		};
+		server.start();
 
 		// check if sender is connected to a wifi
 		boolean isConnected = true;
@@ -173,4 +202,8 @@ public class UsersSelection implements Initializable {
 		App.setRoot("About");
 	}
 
+	@FXML
+	private void updates() throws Exception {
+		App.setRoot("Update");
+	}
 }

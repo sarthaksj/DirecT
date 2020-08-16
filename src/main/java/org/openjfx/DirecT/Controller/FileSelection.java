@@ -352,17 +352,15 @@ public class FileSelection implements Initializable {
 					@Override
 					protected Void call() throws Exception {
 
-						// open the serverSocket and accept any incoming connections
-						try {
-							if (!FlowControlVariables.sendReceive)
-								Connection.openServer();
-						} catch (Exception e) {
-							e.printStackTrace();
+						
+						while(!Connection.senderConnected) {
+							Thread.sleep(100);
 						}
+										
 						connectionEstablished = true;
 						waitRing2.setVisible(false);
 						try {
-
+							System.out.println("Program reched sender progress0");
 							App.setRoot("SenderProgress");
 						} catch (Exception e) {
 							e.printStackTrace();

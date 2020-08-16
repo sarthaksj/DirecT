@@ -43,6 +43,10 @@
 	-fx-background-position: center;
 }
 
+.drawer:hover{
+	-fx-background-color: #2874A6;
+}
+
 .slide1{
 	-fx-background-color: #2874A6;
 }

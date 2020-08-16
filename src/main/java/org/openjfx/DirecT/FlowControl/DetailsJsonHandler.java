@@ -11,14 +11,12 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.openjfx.DirecT.Database.DbConnection;
 
-import javafx.concurrent.Service;
-import javafx.concurrent.Task;
-
 public class DetailsJsonHandler {
 	private static Connection con = DbConnection.databaseConnectivity();
 	private static Statement st;
-	
+
 	public static int updateVersion;
+
 	public static void increaseCount() {
 
 		JSONParser jsonParser = new JSONParser();
@@ -144,8 +142,9 @@ public class DetailsJsonHandler {
 	}
 
 	public static int versionCheck() throws SQLException {
-		int version = 1;
-    	String query = "select version from users";
+		System.out.println("inside versoncheck");
+		int version = 0;
+		String query = "select version from users";
 		st = con.createStatement();
 		ResultSet rs = st.executeQuery(query);
 		while (rs.next()) {
@@ -155,7 +154,7 @@ public class DetailsJsonHandler {
 		con.close();
 		st.close();
 		rs.close();
-		
+
 		return version;
 
 	}
@@ -254,7 +253,7 @@ public class DetailsJsonHandler {
 	}
 
 	public static void setNewVersion() {
-		
+
 		JSONParser jsonParser = new JSONParser();
 		try {
 
@@ -276,13 +275,14 @@ public class DetailsJsonHandler {
 			e.printStackTrace();
 
 		}
-		
+
 	}
+
 	public static boolean checkUpdateAvaialable() throws Exception {
 
 		int v1 = versionCheck();
 		int v2 = getCurrentVesion();
-		updateVersion=v1;
+		updateVersion = v1;
 		System.out.println("inside check update");
 		if (v1 != v2) {
 			System.out.println("true");
@@ -292,10 +292,6 @@ public class DetailsJsonHandler {
 		System.out.println("false");
 
 		return false;
-
-	}
-
-	public static void main(String[] args) throws SQLException {
 
 	}
 
