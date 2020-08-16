@@ -333,12 +333,15 @@ public class FileSelection implements Initializable {
 		// establish a conection to the sender and delete from sender progress;
 		if (connectionEstablished == false) {
 
+			System.out.println("connection Established");
+
 			waitRing2.setVisible(true);
 			// call a thread to establish a connection which will set connectionEstablished
 			// to true to proceed
 			waitRing();
 
 		} else {
+			System.out.println("Hello inside file selection already connected");
 			App.setRoot("SenderProgress");
 
 		}

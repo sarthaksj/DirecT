@@ -6,6 +6,7 @@ import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import org.openjfx.DirecT.Commands.WindowsCommands;
+import org.openjfx.DirecT.Controller.FileSelection;
 
 public class Connection {
 
@@ -47,6 +48,7 @@ public class Connection {
 		bos = new DataOutputStream(socket.getOutputStream());
 		is = new DataInputStream(socket.getInputStream());
 		receiverConnected=true;
+		FileSelection.connectionEstablished=true;
 
 	}
 
