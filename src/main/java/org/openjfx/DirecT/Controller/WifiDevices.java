@@ -53,6 +53,7 @@ public class WifiDevices implements Initializable {
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
+		
 
 		try {
 			WindowsCommands.disconnect();// to ensure if the receiver is not connected to any netwrok double check

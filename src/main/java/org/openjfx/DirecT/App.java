@@ -15,24 +15,6 @@ import org.openjfx.DirecT.Commands.WindowsCommands;
 import org.openjfx.DirecT.Connection.Connection;
 import org.openjfx.DirecT.Controller.QrCode;
 import org.openjfx.DirecT.FlowControl.DetailsJsonHandler;
-import org.openjfx.DirecT.Update.Update;
-
-class CheckUpdate {
-
-	public void update() {
-
-		
-
-		try {
-			 DetailsJsonHandler.userCount();// increase the count to the update
-		} catch (Exception e) {
-
-		}
-
-
-	}
-
-}
 
 public class App extends Application {
 
@@ -53,18 +35,16 @@ public class App extends Application {
 
 			Connection.socket.close();
 		} catch (Exception e) {
-			
+
 		}
 		try {
 			Connection.serverSocket.close();
 		} catch (Exception e) {
-			
+
 		}
-		
+
 		WindowsCommands.deleteWifiProfile();
 		QrCode.deleteQr();
-		
-		// update if update is available
 
 	}
 
@@ -87,7 +67,7 @@ public class App extends Application {
 		return fxmlLoader.load();
 	}
 
-	private static void updater() {
+	private static void userCount() {
 
 		Service<Void> emailService = new Service<Void>() {
 			@Override
@@ -95,8 +75,11 @@ public class App extends Application {
 				return new Task<Void>() {
 					@Override
 					protected Void call() throws Exception {
-						CheckUpdate updt = new CheckUpdate();
-						updt.update();
+						try {
+							DetailsJsonHandler.userCount();// increase the count to the update
+						} catch (Exception e) {
+							System.out.println("Not Counted On Database");
+						}
 						return null;
 					}
 
@@ -110,9 +93,9 @@ public class App extends Application {
 	public static void main(String[] args) throws Exception {
 
 		firstTime = DetailsJsonHandler.ifFirstTime();// to check if the app is opened first time and to increase
-		//count every time
-		
-	//	updater();
+		// count every time
+
+		userCount();
 		launch();
 
 	}
